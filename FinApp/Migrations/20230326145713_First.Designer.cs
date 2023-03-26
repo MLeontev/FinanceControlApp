@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinApp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230326125509_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20230326145713_First")]
+    partial class First
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,7 +53,12 @@ namespace FinApp.Migrations
                     b.Property<int>("TotalSum")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
                 });
@@ -142,6 +147,17 @@ namespace FinApp.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("FinApp.Model.Category", b =>
+                {
+                    b.HasOne("FinApp.Model.User", "User")
+                        .WithMany("Categories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("FinApp.Model.Expense", b =>
                 {
                     b.HasOne("FinApp.Model.Account", "Account")
@@ -190,6 +206,8 @@ namespace FinApp.Migrations
             modelBuilder.Entity("FinApp.Model.User", b =>
                 {
                     b.Navigation("Accounts");
+
+                    b.Navigation("Categories");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,5 +12,6 @@ namespace FinApp.Model
         public string Login { get; set; }
         public string Password { get; set; }
         public List<Account> Accounts { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

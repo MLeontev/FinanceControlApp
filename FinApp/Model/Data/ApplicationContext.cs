@@ -15,7 +15,14 @@ namespace FinApp.Model.Data
         public DbSet<Income> Incomes { get; set; } = null!;
         public DbSet<Expense> Expenses { get; set; } = null!;
 
-        public ApplicationContext() => Database.EnsureCreated();
+        public string DbPath { get; }
+
+        public ApplicationContext()
+        {
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            DbPath = System.IO.Path.Join(path, "FinAppDB.db");
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

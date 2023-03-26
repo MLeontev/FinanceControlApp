@@ -50,7 +50,12 @@ namespace FinApp.Migrations
                     b.Property<int>("TotalSum")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
                 });
@@ -139,6 +144,17 @@ namespace FinApp.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("FinApp.Model.Category", b =>
+                {
+                    b.HasOne("FinApp.Model.User", "User")
+                        .WithMany("Categories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("FinApp.Model.Expense", b =>
                 {
                     b.HasOne("FinApp.Model.Account", "Account")
@@ -187,6 +203,8 @@ namespace FinApp.Migrations
             modelBuilder.Entity("FinApp.Model.User", b =>
                 {
                     b.Navigation("Accounts");
+
+                    b.Navigation("Categories");
                 });
 #pragma warning restore 612, 618
         }
