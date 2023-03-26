@@ -1,0 +1,23 @@
+﻿<Window x:Class="FinApp.View.AddNewAccount"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:FinApp.View"
+        mc:Ignorable="d"
+        Title="Новый счет" Height="250" Width="400">
+    <Grid>
+        <StackPanel VerticalAlignment="Center">
+
+            <TextBlock Text="Добавление счета" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 20 0 20"></TextBlock>
+
+            <TextBox x:Name="Balance" materialDesign:HintAssist.Hint="Введите баланс" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
+
+            <ComboBox x:Name="AccountTypes" materialDesign:HintAssist.Hint="Выберите тип счета" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0"></ComboBox>
+
+            <Button Content="Добавить" Margin="20"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

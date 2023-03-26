@@ -1,0 +1,89 @@
+﻿<Window x:Class="FinApp.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinApp.View"
+        mc:Ignorable="d"
+        Title="Мои финансы" Height="600" Width="900">
+    <Grid>
+        <TabControl TabStripPlacement="Right">
+            <TabItem Name="ListTab">
+                <TabItem.Header>
+                    <TextBlock Text="Операции"/>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <ListView >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="150" Header="Дата"/>
+                                <GridViewColumn Width="150" Header="Сумма"/>
+                                <GridViewColumn Width="150" Header="Счет"/>
+                                <GridViewColumn Width="150" Header="Категория"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                        <Button Content="Доход" Grid.Row="1" Margin="20 0 0 0" Width="200"/>
+                        <Button Content="Расход" Background="#E91218"  Grid.Row="1" Margin="20 0 0 0" Width="200"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Name="CategoriesTab">
+                <TabItem.Header>
+                    <TextBlock Text="Категории"/>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <ListView>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="150" Header="Категория"/>
+                                <GridViewColumn Width="150" Header="Сумма"/>
+                                <GridViewColumn Width="150" Header="Процент"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                        <Button Content="Новая категория" Grid.Row="1" Margin="20 0 0 0" Width="200"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Name="AccountsTab">
+                <TabItem.Header>
+                    <TextBlock Text="Счета"/>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <ListView>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="150" Header="Счет"/>
+                                <GridViewColumn Width="150" Header="Баланс"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                        <Button Content="Новый счет" Grid.Row="1" Margin="20 0 0 0" Width="200"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Name="SettingsTab">
+                <TabItem.Header>
+                    <TextBlock Text="Настройки"/>
+                </TabItem.Header>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
