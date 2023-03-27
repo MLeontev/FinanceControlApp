@@ -12,6 +12,8 @@
 
             <TextBlock Text="Добавление счета" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 20 0 20"></TextBlock>
 
+            <TextBox x:Name="AccountName" materialDesign:HintAssist.Hint="Введите название" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
+
             <TextBox x:Name="Balance" materialDesign:HintAssist.Hint="Введите баланс" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
 
             <ComboBox x:Name="AccountTypes" materialDesign:HintAssist.Hint="Выберите тип счета" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0"></ComboBox>
