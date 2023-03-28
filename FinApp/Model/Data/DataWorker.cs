@@ -127,15 +127,55 @@ namespace FinApp.Model.Data
         }
 
         //удалить счет
-
+        public static string DeleteAccount(Account account)
+        {
+            string result = "Такого счета не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Accounts.Remove(account);
+                db.SaveChanges();
+                result = "Счет " + account.Name + " удален";
+            }
+            return result;
+        }
 
         //удалить категорию
-
+        public static string DeleteCategory(Category category)
+        {
+            string result = "Такой категории не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Categories.Remove(category);
+                db.SaveChanges();
+                result = "Категория " + category.Name + " удалена";
+            }
+            return result;
+        }
 
         //удалить доход
-
+        public static string DeleteIncome(Income income)
+        {
+            string result = "Такого дохода не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Incomes.Remove(income);
+                db.SaveChanges();
+                result = "Доход удален";
+            }
+            return result;
+        }
 
         //удалить расход
-
+        public static string DeleteIncome(Expense expense)
+        {
+            string result = "Такого расхода не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Expenses.Remove(expense);
+                db.SaveChanges();
+                result = "Расход удален";
+            }
+            return result;
+        }
     }
 }
