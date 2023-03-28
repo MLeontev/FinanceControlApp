@@ -28,7 +28,7 @@ namespace FinApp.Model.Data
         }
 
         //создать счет
-        public static string CreatAccount(User user, string type, string name)
+        public static string CreatAccount(User user, string type, string name, int balance)
         {
             string result = "Такой счет уже существует";
             using (ApplicationContext db = new ApplicationContext())
@@ -38,9 +38,10 @@ namespace FinApp.Model.Data
                 {
                     Account account = new Account
                     {
-                        User = user,
+                        UserId = user.Id,
                         Type = type,
-                        Name = name
+                        Name = name,
+                        Balance = balance
                     };
                     db.Accounts.Add(account);
                     db.SaveChanges();
@@ -49,5 +50,8 @@ namespace FinApp.Model.Data
             }
             return result;
         }
+
+        //создать категорию
+
     }
 }
