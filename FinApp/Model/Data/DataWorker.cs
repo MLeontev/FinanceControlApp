@@ -192,5 +192,23 @@ namespace FinApp.Model.Data
             }
             return result;
         }
+
+        //редактировать счет
+        public static string EditAccount(Account oldAccount, string newType, string newName, int newBalance)
+        {
+            string result = "Такого счета не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Account account = db.Accounts.FirstOrDefault(account => account.Id == oldAccount.Id);
+                account.Type = newType;
+                account.Name = newName;
+                account.Balance = newBalance;
+                db.SaveChanges();
+                result = $"Сделано! Новое название: {account.Name}, тип: {account.Type}, баланс: {account.Balance}";
+            }
+            return result;
+        }
+
+
     }
 }
