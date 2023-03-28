@@ -15,7 +15,7 @@ namespace FinApp.Model.Data
             string result = "Такой пользователь уже существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                bool checkIsExist = db.Users.Any(el => (el.Login == login && el.Password == password));
+                bool checkIsExist = db.Users.Any(el => el.Login == login);
                 if (!checkIsExist)
                 {
                     User user = new User { Login = login, Password = password };
@@ -52,6 +52,90 @@ namespace FinApp.Model.Data
         }
 
         //создать категорию
+        public static string CreatCategory(User user, string name)
+        {
+            string result = "Такая категория уже существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                bool checkIsExist = db.Categories.Any(el => (el.User == user && el.Name == name));
+                if (!checkIsExist)
+                {
+                    Category category = new Category
+                    {
+                        UserId = user.Id,
+                        Name = name
+                    };
+                    db.Categories.Add(category);
+                    db.SaveChanges();
+                    result = "Сделано";
+                }
+            }
+            return result;
+        }
+
+        //создать доход
+        public static string CreatIncome(Account account, int amount, Category category, DateTime date)
+        {
+            string result;
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Income income = new Income
+                {
+                    AccountId = account.Id,
+                    Amount = amount,
+                    Category = category,
+                    Date = date
+                };
+                db.Incomes.Add(income);
+                db.SaveChanges();
+                result = "Сделано";
+            }
+            return result;
+        }
+
+        //создать расход
+        public static string CreatExpense(Account account, int amount, Category category, DateTime date)
+        {
+            string result;
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Expense expense = new Expense
+                {
+                    AccountId = account.Id,
+                    Amount = amount,
+                    Category = category,
+                    Date = date
+                };
+                db.Expenses.Add(expense);
+                db.SaveChanges();
+                result = "Сделано";
+            }
+            return result;
+        }
+
+        //удалить пользователя
+        public static string DeleteUser(User user)
+        {
+            string result = "Такого пользователя не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Users.Remove(user);
+                db.SaveChanges();
+                result = "Пользователь " + user.Login + " удален";
+            }
+            return result;
+        }
+
+        //удалить счет
+
+
+        //удалить категорию
+
+
+        //удалить доход
+
+
+        //удалить расход
 
     }
 }
