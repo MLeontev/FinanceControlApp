@@ -21,7 +21,7 @@ namespace FinApp.Model.Data
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, "FinAppDB.db");
+            DbPath = System.IO.Path.Join(path, "FinApp.db");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

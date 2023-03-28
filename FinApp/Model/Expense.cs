@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FinApp.Model.Data;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,5 +17,14 @@ namespace FinApp.Model
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public DateTime Date { get; set; }
+
+        [NotMapped]
+        public Account ExpenseAccount
+        {
+            get
+            {
+                return DataWorker.GetAccountById(AccountId);
+            }
+        }
     }
 }

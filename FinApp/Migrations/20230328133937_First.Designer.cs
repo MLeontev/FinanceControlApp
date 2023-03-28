@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinApp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230327140902_UpdateAccount")]
-    partial class UpdateAccount
+    [Migration("20230328133937_First")]
+    partial class First
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
