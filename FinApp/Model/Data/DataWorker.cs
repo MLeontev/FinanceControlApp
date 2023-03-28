@@ -177,5 +177,20 @@ namespace FinApp.Model.Data
             }
             return result;
         }
+
+        //редактировать пользователя
+        public static string EditUser(User oldUser, string newLogin, string newPassword)
+        {
+            string result = "Такого пользователя не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                User user = db.Users.FirstOrDefault(user => user.Id == oldUser.Id);
+                user.Login = newLogin;
+                user.Password = newPassword;
+                db.SaveChanges();
+                result = $"Сделано! Новый логин: {user.Login}, пароль: {user.Password}";
+            }
+            return result;
+        }
     }
 }
