@@ -42,7 +42,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding AllUserCategories}">
+                    <ListView ItemsSource="{Binding AllUserAccounts}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Категория"/>

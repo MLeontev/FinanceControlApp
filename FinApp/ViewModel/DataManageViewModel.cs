@@ -7,6 +7,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using FinApp.View;
 
 namespace FinApp.ViewModel
 {
@@ -58,7 +60,52 @@ namespace FinApp.ViewModel
         }
 
 
+        #region Методы открытия окон
+        private void OpenAddAccountWindowMethod()
+        {
+            AddNewAccount newAccountWindow = new AddNewAccount();
+            SetCenterPositionAndOpen(newAccountWindow);
+        }
 
+        private void OpenAddCategoryWindowMethod()
+        {
+            AddNewCategory newCategoryWindow = new AddNewCategory();
+            SetCenterPositionAndOpen(newCategoryWindow);
+        }
+
+        private void OpenAddExpenseWindowMethod()
+        {
+            AddNewExpense newExpenseWindow = new AddNewExpense();
+            SetCenterPositionAndOpen(newExpenseWindow);
+        }
+
+        private void OpenAddIncomeWindowMethod()
+        {
+            AddNewIncome newIncomeWindow = new AddNewIncome();
+            SetCenterPositionAndOpen(newIncomeWindow);
+        }
+
+        private void OpenAuthenticationWindowMethod(Window window)
+        {
+            AuthenticationWindow authWindow = new AuthenticationWindow();
+            SetCenterPositionAndOpen(authWindow);
+            window.Close();
+        }
+
+        private void OpenRegistrationWindowMethod(Window window)
+        {
+            RegistrationWindow regWindow = new RegistrationWindow();
+            SetCenterPositionAndOpen(regWindow);
+            window.Close();
+        }
+
+        private void SetCenterPositionAndOpen(Window window)
+        {
+            window.Owner = Application.Current.MainWindow;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            window.ShowDialog();
+        }
+        #endregion
 
 
 

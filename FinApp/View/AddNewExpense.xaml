@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
-        Title="Новый расход" Height="250" Width="400">
+        Title="Новый расход" Height="300" Width="400">
     <Grid>
         <StackPanel VerticalAlignment="Center">
 
@@ -15,6 +15,8 @@
             <TextBox x:Name="ExpenseSum" materialDesign:HintAssist.Hint="Введите сумму" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
 
             <ComboBox x:Name="ExpenseCategories" materialDesign:HintAssist.Hint="Выберите категорию" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0"></ComboBox>
+
+            <DatePicker Margin="20"/>
 
             <Button Content="Добавить" Margin="20"/>
 
