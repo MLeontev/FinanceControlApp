@@ -54,7 +54,7 @@ namespace FinApp.Model.Data
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Operation> incomes = (from operation in GetAllOperations() where operation.IsIncome == true select operation).ToList();
+                List<Operation> incomes = (from operation in GetAllOperations() where operation.IsIncome == 1 select operation).ToList();
                 return incomes;
             }
         }
@@ -64,7 +64,7 @@ namespace FinApp.Model.Data
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Operation> expenses = (from operation in GetAllOperations() where operation.IsIncome == false select operation).ToList();
+                List<Operation> expenses = (from operation in GetAllOperations() where operation.IsIncome == 0 select operation).ToList();
                 return expenses;
             }
         }
@@ -114,7 +114,7 @@ namespace FinApp.Model.Data
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Operation> expenses = (from operation in GetAllOperationsByUserId(id) where operation.IsIncome == false select operation).ToList();
+                List<Operation> expenses = (from operation in GetAllOperationsByUserId(id) where operation.IsIncome == 0 select operation).ToList();
                 return expenses;
             }
         }
@@ -124,7 +124,7 @@ namespace FinApp.Model.Data
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Operation> incomes = (from operation in GetAllOperationsByUserId(id) where operation.IsIncome == true select operation).ToList();
+                List<Operation> incomes = (from operation in GetAllOperationsByUserId(id) where operation.IsIncome == 1 select operation).ToList();
                 return incomes;
             }
         }
@@ -144,7 +144,7 @@ namespace FinApp.Model.Data
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Operation> incomes = (from operation in GetAllOperationsByAccountId(id) where operation.IsIncome == true select operation).ToList();
+                List<Operation> incomes = (from operation in GetAllOperationsByAccountId(id) where operation.IsIncome == 1 select operation).ToList();
                 return incomes;
             }
         }
@@ -154,7 +154,7 @@ namespace FinApp.Model.Data
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Operation> expenses = (from operation in GetAllOperationsByAccountId(id) where operation.IsIncome == false select operation).ToList();
+                List<Operation> expenses = (from operation in GetAllOperationsByAccountId(id) where operation.IsIncome == 0 select operation).ToList();
                 return expenses;
             }
         }
@@ -224,7 +224,7 @@ namespace FinApp.Model.Data
         }
 
         //создать операцию
-        public static string CreateOperation(Account account, int amount, Category category, DateTime date, bool isIncome)
+        public static string CreateOperation(Account account, int amount, Category category, DateTime date, int isIncome)
         {
             string result;
             using (ApplicationContext db = new ApplicationContext())
@@ -328,7 +328,7 @@ namespace FinApp.Model.Data
         }
 
         //редактировать операцию
-        public static string EditIncome(Operation oldOperation, Account newAccount, int newAmount, Category newCategory, DateTime newDate, bool newIsIncome)
+        public static string EditIncome(Operation oldOperation, Account newAccount, int newAmount, Category newCategory, DateTime newDate, int newIsIncome)
         {
             string result = "Такого дохода не существует";
             using (ApplicationContext db = new ApplicationContext())
