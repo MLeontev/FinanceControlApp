@@ -27,6 +27,38 @@ namespace FinApp.ViewModel
             }
         }
 
+        //все операции пользователя
+        private List<Operation> allUserOperations = DataWorker.GetAllOperationsByUserId(userId);
+        public List<Operation> AllUserOperations
+        {
+            get
+            {
+                return allUserOperations;
+            }
+            set
+            {
+                allUserOperations = value;
+                OnPropertyChanged("AllUserOperations");
+            }
+        }
+
+        //все категории пользователя
+        private List<Category> allUserCategories = DataWorker.GetAllCategoriesByUserId(userId);
+        public List<Category> AllUserCategories
+        {
+            get
+            {
+                return allUserCategories;
+            }
+            set
+            {
+                allUserCategories = value;
+                OnPropertyChanged("AllUserCategories");
+            }
+        }
+
+
+
 
 
 
