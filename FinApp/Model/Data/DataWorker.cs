@@ -109,6 +109,28 @@ namespace FinApp.Model.Data
             }
         }
 
+        //получить все доходы пользователя
+        public static List<Income> GetAllIncomesByUserId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Income> incomes = (from income in GetAllIncomes() where income.IncomeAccount.UserId == id select income).ToList();
+                return incomes;
+            }
+        }
+
+        //получить все доходы по счету
+        public static List<Income> GetAllIncomesByAccountId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Income> incomes = (from income in GetAllIncomes() where income.AccountId == id select income).ToList();
+                return incomes;
+            }
+        }
+
+        
+
         //создать пользователя
         public static string CreateUser(string login, string password)
         {

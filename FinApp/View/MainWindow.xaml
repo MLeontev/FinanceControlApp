@@ -65,7 +65,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView>
+                    <ListView ItemsSource="{Binding AllUserAccounts}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Счет"/>
