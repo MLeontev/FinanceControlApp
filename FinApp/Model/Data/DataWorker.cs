@@ -50,22 +50,32 @@ namespace FinApp.Model.Data
         }
 
         //получить все доходы
-        public static List<Income> GetAllIncomes()
+        public static List<Operation> GetAllIncomes()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Income> incomes = db.Incomes.ToList();
+                List<Operation> incomes = (from operation in GetAllOperations() where operation.IsIncome == true select operation).ToList();
                 return incomes;
             }
         }
 
         //получить все расходы
-        public static List<Expense> GetAllExpenses()
+        public static List<Operation> GetAllExpenses()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Expense> expenses = db.Expenses.ToList();
+                List<Operation> expenses = (from operation in GetAllOperations() where operation.IsIncome == false select operation).ToList();
                 return expenses;
+            }
+        }
+
+        //получить все операции
+        public static List<Operation> GetAllOperations()
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Operation> operations = db.Operations.ToList();
+                return operations;
             }
         }
 
@@ -89,47 +99,65 @@ namespace FinApp.Model.Data
             }
         }
 
-        //получить все расходы пользователя
-        public static List<Expense> GetAllExpensesByUserId(int id)
+        //получить все операции пользователя
+        public static List<Operation> GetAllOperationsByUserId(int id)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Expense> expenses = (from expense in GetAllExpenses() where expense.ExpenseAccount.UserId == id select expense).ToList();
-                return expenses;
+                List<Operation> operations = (from operation in GetAllOperations() where operation.OperationAccount.UserId == id  select operation).ToList();
+                return operations;
             }
         }
 
-        //получить все расходы по счету
-        public static List<Expense> GetAllExpensesByAccountId(int id)
+        //получить все расходы пользователя
+        public static List<Operation> GetAllExpensesByUserId(int id)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Expense> expenses = (from expense in GetAllExpenses() where expense.AccountId == id select expense).ToList();
+                List<Operation> expenses = (from operation in GetAllOperationsByUserId(id) where operation.IsIncome == false select operation).ToList();
                 return expenses;
             }
         }
 
         //получить все доходы пользователя
-        public static List<Income> GetAllIncomesByUserId(int id)
+        public static List<Operation> GetAllIncomesByUserId(int id)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Income> incomes = (from income in GetAllIncomes() where income.IncomeAccount.UserId == id select income).ToList();
+                List<Operation> incomes = (from operation in GetAllOperationsByUserId(id) where operation.IsIncome == true select operation).ToList();
                 return incomes;
+            }
+        }
+
+        //получить все операции по счету
+        public static List<Operation> GetAllOperationsByAccountId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Operation> operations = (from operation in GetAllOperations() where operation.AccountId == id select operation).ToList();
+                return operations;
             }
         }
 
         //получить все доходы по счету
-        public static List<Income> GetAllIncomesByAccountId(int id)
+        public static List<Operation> GetAllIncomesByAccountId(int id)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Income> incomes = (from income in GetAllIncomes() where income.AccountId == id select income).ToList();
+                List<Operation> incomes = (from operation in GetAllOperationsByAccountId(id) where operation.IsIncome == true select operation).ToList();
                 return incomes;
             }
         }
 
-        
+        //получить все расходы по счету
+        public static List<Operation> GetAllExpensesByAccountId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Operation> expenses = (from operation in GetAllOperationsByAccountId(id) where operation.IsIncome == false select operation).ToList();
+                return expenses;
+            }
+        }
 
         //создать пользователя
         public static string CreateUser(string login, string password)
@@ -195,40 +223,21 @@ namespace FinApp.Model.Data
             return result;
         }
 
-        //создать доход
-        public static string CreateIncome(Account account, int amount, Category category, DateTime date)
+        //создать операцию
+        public static string CreateOperation(Account account, int amount, Category category, DateTime date, bool isIncome)
         {
             string result;
             using (ApplicationContext db = new ApplicationContext())
             {
-                Income income = new Income
+                Operation operation = new Operation
                 {
                     AccountId = account.Id,
                     Amount = amount,
                     Category = category,
-                    Date = date
+                    Date = date,
+                    IsIncome = isIncome
                 };
-                db.Incomes.Add(income);
-                db.SaveChanges();
-                result = "Сделано";
-            }
-            return result;
-        }
-
-        //создать расход
-        public static string CreateExpense(Account account, int amount, Category category, DateTime date)
-        {
-            string result;
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                Expense expense = new Expense
-                {
-                    AccountId = account.Id,
-                    Amount = amount,
-                    Category = category,
-                    Date = date
-                };
-                db.Expenses.Add(expense);
+                db.Operations.Add(operation);
                 db.SaveChanges();
                 result = "Сделано";
             }
@@ -274,28 +283,15 @@ namespace FinApp.Model.Data
             return result;
         }
 
-        //удалить доход
-        public static string DeleteIncome(Income income)
+        //удалить операцию
+        public static string DeleteIncome(Operation operation)
         {
-            string result = "Такого дохода не существует";
+            string result = "Такой операции не существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                db.Incomes.Remove(income);
+                db.Operations.Remove(operation);
                 db.SaveChanges();
-                result = "Доход удален";
-            }
-            return result;
-        }
-
-        //удалить расход
-        public static string DeleteExpense(Expense expense)
-        {
-            string result = "Такого расхода не существует";
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                db.Expenses.Remove(expense);
-                db.SaveChanges();
-                result = "Расход удален";
+                result = "Операция удалена";
             }
             return result;
         }
@@ -331,36 +327,20 @@ namespace FinApp.Model.Data
             return result;
         }
 
-        //редактировать доход
-        public static string EditIncome(Income oldIncome, Account newAccount, int newAmount, Category newCategory, DateTime newDate)
+        //редактировать операцию
+        public static string EditIncome(Operation oldOperation, Account newAccount, int newAmount, Category newCategory, DateTime newDate, bool newIsIncome)
         {
             string result = "Такого дохода не существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                Income income = db.Incomes.FirstOrDefault(income => income.Id == oldIncome.Id);
-                income.AccountId = newAccount.Id;
-                income.Amount = newAmount;
-                income.Category = newCategory;
-                income.Date = newDate;
+                Operation operation = db.Operations.FirstOrDefault(income => income.Id == oldOperation.Id);
+                operation.AccountId = newAccount.Id;
+                operation.Amount = newAmount;
+                operation.Category = newCategory;
+                operation.Date = newDate;
+                operation.IsIncome = newIsIncome;
                 db.SaveChanges();
-                result = $"Доход за {income.Date} изменен";
-            }
-            return result;
-        }
-
-        //редактировать расход
-        public static string EditExpense(Income oldExpense, Account newAccount, int newAmount, Category newCategory, DateTime newDate)
-        {
-            string result = "Такого дохода не существует";
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                Expense expense = db.Expenses.FirstOrDefault(expense => expense.Id == oldExpense.Id);
-                expense.AccountId = newAccount.Id;
-                expense.Amount = newAmount;
-                expense.Category = newCategory;
-                expense.Date = newDate;
-                db.SaveChanges();
-                result = $"Расход за {expense.Date} изменен";
+                result = $"Доход за {operation.Date} изменен";
             }
             return result;
         }

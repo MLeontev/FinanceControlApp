@@ -12,8 +12,7 @@ namespace FinApp.Model.Data
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Account> Accounts { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
-        public DbSet<Income> Incomes { get; set; } = null!;
-        public DbSet<Expense> Expenses { get; set; } = null!;
+        public DbSet<Operation> Operations { get; set; } = null!;
 
         public string DbPath { get; }
 

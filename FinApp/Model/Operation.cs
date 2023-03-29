@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinApp.Model
 {
-    public class Income
+    public class Operation
     {
         public int Id { get; set; }
         public int AccountId { get; set; }
@@ -17,9 +17,10 @@ namespace FinApp.Model
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public DateTime Date { get; set; }
+        public bool IsIncome { get; set; }
 
         [NotMapped]
-        public Account IncomeAccount
+        public Account OperationAccount
         {
             get
             {

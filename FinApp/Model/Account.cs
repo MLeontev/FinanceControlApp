@@ -14,7 +14,6 @@ namespace FinApp.Model
         public string Name { get; set; }
         public string Type { get; set; }
         public int Balance { get; set; }
-        public List<Income> Incomes { get; set; }
-        public List<Expense> Expenses { get; set; }
+        public List<Operation> Operations { get; set; }
     }
 }
