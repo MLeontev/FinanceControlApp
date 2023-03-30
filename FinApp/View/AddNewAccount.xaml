@@ -6,19 +6,24 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
-        Title="Новый счет" Height="250" Width="400">
+        Title="Новый счет" Height="300" Width="400"
+        Name="AddNewAccountWnd">
     <Grid>
         <StackPanel VerticalAlignment="Center">
 
             <TextBlock Text="Добавление счета" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 20 0 20"></TextBlock>
 
-            <TextBox x:Name="AccountName" materialDesign:HintAssist.Hint="Введите название" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
+            <TextBox x:Name="AccountName" materialDesign:HintAssist.Hint="Введите название" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" Text="{Binding AccountName}" />
 
-            <TextBox x:Name="Balance" materialDesign:HintAssist.Hint="Введите баланс" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
+            <TextBox x:Name="AccountBalance" materialDesign:HintAssist.Hint="Введите баланс" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" Text="{Binding AccountBalance}"/>
 
-            <ComboBox x:Name="AccountTypes" materialDesign:HintAssist.Hint="Выберите тип счета" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0"></ComboBox>
+            <ComboBox x:Name="AccountTypes" materialDesign:HintAssist.Hint="Выберите тип счета" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0" Text="{Binding AccountType}">
+                <TextBlock>Наличные</TextBlock>
+                <TextBlock>Дебетовая карта</TextBlock>
+                <TextBlock>Кредитная карта</TextBlock>
+            </ComboBox>
 
-            <Button Content="Добавить" Margin="20"/>
+            <Button Content="Добавить" CommandParameter="{Binding ElementName=AddNewAccountWnd}" Margin="20" />
 
         </StackPanel>
     </Grid>

@@ -9,7 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using FinApp.View;
-
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace FinApp.ViewModel
 {
@@ -183,7 +184,50 @@ namespace FinApp.ViewModel
             }
         }
 
-        
+        #endregion
+
+        private void SetRedBlockControl(Window wnd, string blockname)
+        {
+            Control block = wnd.FindName(blockname) as Control;
+            block.BorderBrush = Brushes.Red;
+        }
+
+        public static string AccountName { get; set; }
+
+        public static int AccountBalance { get; set; }
+
+        public static string AccountType { get; set; }
+
+        #region Команды для добавления
+        private RelayCommand addNewAccount;
+        public RelayCommand AddNewAccount
+        {
+            get
+            {
+                return addNewAccount ?? new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window;
+                    string resultStr = "";
+                    if (AccountName.Length == 0 || AccountName.Replace(" ", "").Length == 0)
+                    {
+                        MessageBox.Show("123");
+                    }
+                    else if (AccountType == null)
+                    {
+                        SetRedBlockControl(wnd, "AccountTypes");
+                    }
+                    else if (AccountBalance < 0)
+                    {
+                        SetRedBlockControl(wnd, "AccountBalance");
+                    }
+                    else
+                    {
+                        resultStr = DataWorker.CreateAccount(AccountType, AccountName, AccountBalance);
+                    }
+                }
+                );
+            }
+        }
 
         #endregion
 
