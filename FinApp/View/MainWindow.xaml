@@ -17,7 +17,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding AllUserOperations}">
+                    <ListView ItemsSource="{Binding AllOperations}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Дата"/>
@@ -42,7 +42,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding AllUserAccounts}">
+                    <ListView ItemsSource="{Binding AllCategories}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Категория"/>
@@ -65,7 +65,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding AllUserAccounts}">
+                    <ListView ItemsSource="{Binding AllAccounts}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Счет"/>

@@ -19,15 +19,6 @@ namespace FinApp.Model.Data
             }
         }
 
-        //получить всех пользователей
-        public static List<User> GetAllUsers()
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<User> users = db.Users.ToList();
-                return users;
-            }
-        }
 
         //получить все категории
         public static List<Category> GetAllCategories()
@@ -79,55 +70,8 @@ namespace FinApp.Model.Data
             }
         }
 
-        //получить все категории пользователя
-        public static List<Category> GetAllCategoriesByUserId(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<Category> categories = (from category in GetAllCategories() where category.UserId == id select category).ToList();
-                return categories;
-            }
-        }
 
-        //получить все счета пользователя
-        public static List<Account> GetAllAccountsByUserId(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<Account> accounts = (from account in GetAllAccounts() where account.UserId == id select account).ToList();
-                return accounts;
-            }
-        }
 
-        //получить все операции пользователя
-        public static List<Operation> GetAllOperationsByUserId(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<Operation> operations = (from operation in GetAllOperations() where operation.OperationAccount.UserId == id  select operation).ToList();
-                return operations;
-            }
-        }
-
-        //получить все расходы пользователя
-        public static List<Operation> GetAllExpensesByUserId(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<Operation> expenses = (from operation in GetAllOperationsByUserId(id) where operation.IsIncome == 0 select operation).ToList();
-                return expenses;
-            }
-        }
-
-        //получить все доходы пользователя
-        public static List<Operation> GetAllIncomesByUserId(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<Operation> incomes = (from operation in GetAllOperationsByUserId(id) where operation.IsIncome == 1 select operation).ToList();
-                return incomes;
-            }
-        }
 
         //получить все операции по счету
         public static List<Operation> GetAllOperationsByAccountId(int id)
@@ -159,36 +103,18 @@ namespace FinApp.Model.Data
             }
         }
 
-        //создать пользователя
-        public static string CreateUser(string login, string password)
-        {
-            string result = "Такой пользователь уже существует";
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                bool checkIsExist = db.Users.Any(el => el.Login == login);
-                if (!checkIsExist)
-                {
-                    User user = new User { Login = login, Password = password };
-                    db.Users.Add(user);
-                    db.SaveChanges();
-                    result = "Сделано";
-                }
-            }
-            return result;
-        }
 
         //создать счет
-        public static string CreateAccount(User user, string type, string name, int balance)
+        public static string CreateAccount(string type, string name, int balance)
         {
             string result = "Такой счет уже существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                bool checkIsExist = db.Accounts.Any(el => (el.User == user && el.Type == type && el.Name == name));
+                bool checkIsExist = db.Accounts.Any(el => (el.Type == type && el.Name == name));
                 if (!checkIsExist)
                 {
                     Account account = new Account
                     {
-                        UserId = user.Id,
                         Type = type,
                         Name = name,
                         Balance = balance
@@ -202,17 +128,16 @@ namespace FinApp.Model.Data
         }
 
         //создать категорию
-        public static string CreateCategory(User user, string name)
+        public static string CreateCategory(string name)
         {
             string result = "Такая категория уже существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                bool checkIsExist = db.Categories.Any(el => (el.User == user && el.Name == name));
+                bool checkIsExist = db.Categories.Any(el => (el.Name == name));
                 if (!checkIsExist)
                 {
                     Category category = new Category
                     {
-                        UserId = user.Id,
                         Name = name
                     };
                     db.Categories.Add(category);
@@ -240,19 +165,6 @@ namespace FinApp.Model.Data
                 db.Operations.Add(operation);
                 db.SaveChanges();
                 result = "Сделано";
-            }
-            return result;
-        }
-
-        //удалить пользователя
-        public static string DeleteUser(User user)
-        {
-            string result = "Такого пользователя не существует";
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                db.Users.Remove(user);
-                db.SaveChanges();
-                result = "Пользователь " + user.Login + " удален";
             }
             return result;
         }
@@ -296,20 +208,6 @@ namespace FinApp.Model.Data
             return result;
         }
 
-        //редактировать пользователя
-        public static string EditUser(User oldUser, string newLogin, string newPassword)
-        {
-            string result = "Такого пользователя не существует";
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                User user = db.Users.FirstOrDefault(user => user.Id == oldUser.Id);
-                user.Login = newLogin;
-                user.Password = newPassword;
-                db.SaveChanges();
-                result = $"Сделано! Пользователь {user.Login} изменен";
-            }
-            return result;
-        }
 
         //редактировать счет
         public static string EditAccount(Account oldAccount, string newType, string newName, int newBalance)

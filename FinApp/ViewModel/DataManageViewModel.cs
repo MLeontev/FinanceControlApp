@@ -15,48 +15,46 @@ namespace FinApp.ViewModel
 {
     public class DataManageViewModel : INotifyPropertyChanged
     {
-        //id пользователя
-        private static int userId;
 
         //все счета пользователя
-        private List<Account> allUserAccounts = DataWorker.GetAllAccountsByUserId(userId);
-        public List<Account> AllUserAccounts
+        private List<Account> allAccounts = DataWorker.GetAllAccounts();
+        public List<Account> AllAccounts
         {
-            get { return allUserAccounts; }
+            get { return allAccounts; }
             set
             {
-                allUserAccounts = value;
-                OnPropertyChanged("AllUserAccounts");
+                allAccounts = value;
+                OnPropertyChanged("AllAccounts");
             }
         }
 
         //все операции пользователя
-        private List<Operation> allUserOperations = DataWorker.GetAllOperationsByUserId(userId);
-        public List<Operation> AllUserOperations
+        private List<Operation> allOperations = DataWorker.GetAllOperations();
+        public List<Operation> AllOperations
         {
             get
             {
-                return allUserOperations;
+                return allOperations;
             }
             set
             {
-                allUserOperations = value;
-                OnPropertyChanged("AllUserOperations");
+                allOperations = value;
+                OnPropertyChanged("AllOperations");
             }
         }
 
         //все категории пользователя
-        private List<Category> allUserCategories = DataWorker.GetAllCategoriesByUserId(userId);
-        public List<Category> AllUserCategories
+        private List<Category> allCategories = DataWorker.GetAllCategories();
+        public List<Category> AllCategories
         {
             get
             {
-                return allUserCategories;
+                return allCategories;
             }
             set
             {
-                allUserCategories = value;
-                OnPropertyChanged("AllUserCategories");
+                allCategories = value;
+                OnPropertyChanged("AllCategories");
             }
         }
 

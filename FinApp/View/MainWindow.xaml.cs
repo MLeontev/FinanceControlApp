@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿
+using System.Windows;
+using FinApp.Model.Data;
 using FinApp.ViewModel;
 
 namespace FinApp.View

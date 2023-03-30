@@ -34,12 +34,7 @@ namespace FinApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Accounts");
                 });
@@ -54,12 +49,7 @@ namespace FinApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
                 });
@@ -94,47 +84,6 @@ namespace FinApp.Migrations
                     b.ToTable("Operations");
                 });
 
-            modelBuilder.Entity("FinApp.Model.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("FinApp.Model.Account", b =>
-                {
-                    b.HasOne("FinApp.Model.User", "User")
-                        .WithMany("Accounts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FinApp.Model.Category", b =>
-                {
-                    b.HasOne("FinApp.Model.User", "User")
-                        .WithMany("Categories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("FinApp.Model.Operation", b =>
                 {
                     b.HasOne("FinApp.Model.Account", "Account")
@@ -157,13 +106,6 @@ namespace FinApp.Migrations
             modelBuilder.Entity("FinApp.Model.Account", b =>
                 {
                     b.Navigation("Operations");
-                });
-
-            modelBuilder.Entity("FinApp.Model.User", b =>
-                {
-                    b.Navigation("Accounts");
-
-                    b.Navigation("Categories");
                 });
 #pragma warning restore 612, 618
         }
