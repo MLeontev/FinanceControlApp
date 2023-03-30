@@ -28,8 +28,8 @@
                         </ListView.View>
                     </ListView>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                        <Button Content="Доход" Grid.Row="1" Margin="20 0 0 0" Width="200"/>
-                        <Button Content="Расход" Background="#E91218"  Grid.Row="1" Margin="20 0 0 0" Width="200"/>
+                        <Button Content="Доход" Grid.Row="1" Margin="20 0 0 0" Width="200" Command="{Binding OpenAddIncomeWindow}"/>
+                        <Button Content="Расход" Background="#E91218"  Grid.Row="1" Margin="20 0 0 0" Width="200" Command="{Binding OpenAddExpenseWindow}"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -52,7 +52,7 @@
                         </ListView.View>
                     </ListView>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                        <Button Content="Новая категория" Grid.Row="1" Margin="20 0 0 0" Width="200"/>
+                        <Button Content="Новая категория" Grid.Row="1" Margin="20 0 0 0" Width="200" Command="{Binding OpenAddCategoryWindow}"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -74,7 +74,7 @@
                         </ListView.View>
                     </ListView>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                        <Button Content="Новый счет" Grid.Row="1" Margin="20 0 0 0" Width="200"/>
+                        <Button Content="Новый счет" Grid.Row="1" Margin="20 0 0 0" Width="200" Command="{Binding OpenAddAccountWindow}"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

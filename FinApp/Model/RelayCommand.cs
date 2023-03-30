@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace MVVM
+namespace FinApp.Model
 {
     public class RelayCommand : ICommand
     {

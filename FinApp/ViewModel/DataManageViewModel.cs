@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using FinApp.View;
 
+
 namespace FinApp.ViewModel
 {
     public class DataManageViewModel : INotifyPropertyChanged
@@ -99,6 +100,30 @@ namespace FinApp.ViewModel
             window.Close();
         }
 
+        private void OpenEditAccountWindowMethod()
+        {
+            EditAccount editAccountWindow = new EditAccount();
+            SetCenterPositionAndOpen(editAccountWindow);
+        }
+
+        private void OpenEditCategoryWindowMethod()
+        {
+            EditCategory editCategoryWindow = new EditCategory();
+            SetCenterPositionAndOpen(editCategoryWindow);
+        }
+
+        private void OpenEditExpenseWindowMethod()
+        {
+            EditExpense editExpenseWindow = new EditExpense();
+            SetCenterPositionAndOpen(editExpenseWindow);
+        }
+
+        private void OpenEditIncomeWindowMethod()
+        {
+            EditIncome editIncomeWindow = new EditIncome();
+            SetCenterPositionAndOpen(editIncomeWindow);
+        }
+
         private void SetCenterPositionAndOpen(Window window)
         {
             window.Owner = Application.Current.MainWindow;
@@ -107,7 +132,62 @@ namespace FinApp.ViewModel
         }
         #endregion
 
+        #region Команды открытия окон
+        private RelayCommand openAddAccountWindow;
+        public RelayCommand OpenAddAccountWindow
+        {
+            get
+            {
+                return openAddAccountWindow ?? new RelayCommand(obj =>
+                {
+                    OpenAddAccountWindowMethod();
+                }
+                );
+            }
+        }
 
+        private RelayCommand openAddCategoryWindow;
+        public RelayCommand OpenAddCategoryWindow
+        {
+            get
+            {
+                return openAddCategoryWindow ?? new RelayCommand(obj =>
+                {
+                    OpenAddCategoryWindowMethod();
+                }
+                );
+            }
+        }
+
+        private RelayCommand openAddExpenseWindow;
+        public RelayCommand OpenAddExpenseWindow
+        {
+            get
+            {
+                return openAddExpenseWindow ?? new RelayCommand(obj =>
+                {
+                    OpenAddExpenseWindowMethod();
+                }
+                );
+            }
+        }
+
+        private RelayCommand openAddIncomeWindow;
+        public RelayCommand OpenAddIncomeWindow
+        {
+            get
+            {
+                return openAddIncomeWindow ?? new RelayCommand(obj =>
+                {
+                    OpenAddIncomeWindowMethod();
+                }
+                );
+            }
+        }
+
+        
+
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

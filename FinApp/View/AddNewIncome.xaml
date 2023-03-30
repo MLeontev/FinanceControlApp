@@ -16,7 +16,7 @@
 
             <ComboBox x:Name="IncomeCategories" materialDesign:HintAssist.Hint="Выберите категорию" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0"></ComboBox>
 
-            <DatePicker Margin="20"/>
+            <DatePicker Margin="20" materialDesign:HintAssist.Hint="Выберите дату"/>
 
             <Button Content="Добавить" Margin="20"/>
             
