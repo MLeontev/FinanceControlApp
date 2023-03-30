@@ -23,7 +23,8 @@
                 <TextBlock>Кредитная карта</TextBlock>
             </ComboBox>
 
-            <Button Content="Добавить" CommandParameter="{Binding ElementName=AddNewAccountWnd}" Margin="20" />
+            <Button Content="Добавить" Margin="20" Command="{Binding AddNewAccount}" 
+                    CommandParameter="{Binding ElementName=AddNewAccountWnd}"/>
 
         </StackPanel>
     </Grid>

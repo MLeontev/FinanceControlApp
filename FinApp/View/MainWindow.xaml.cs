@@ -10,9 +10,11 @@ namespace FinApp.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        ApplicationContext db = new ApplicationContext();
         public MainWindow()
         {
             InitializeComponent();
+            db.Database.EnsureCreated();
             DataContext = new DataManageViewModel();
         }
     }

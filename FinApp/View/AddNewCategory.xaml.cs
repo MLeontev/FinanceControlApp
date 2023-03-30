@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace FinApp.View
         public AddNewCategory()
         {
             InitializeComponent();
+            DataContext = new DataManageViewModel();
         }
     }
 }

@@ -198,7 +198,37 @@ namespace FinApp.ViewModel
 
         public static string AccountType { get; set; }
 
+        public static string CategoryName { get; set; }
+
+        public static int IncomeSum { get; set; }
+
+        public static string IncomeCategorie { get; set; }
+
+        public static DateTime IncomeDate { get; set; }
+
         #region Команды для добавления
+        private RelayCommand addNewCategory;
+        public RelayCommand AddNewCategory
+        {
+            get
+            {
+                return addNewCategory ?? new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window;
+                    string resultStr = "";
+                    if (CategoryName == null || CategoryName.Length == 0 || CategoryName.Replace(" ", "").Length == 0)
+                    {
+                        SetRedBlockControl(wnd, "CategoryName");
+                    }
+                    else
+                    {
+                        resultStr = DataWorker.CreateCategory(CategoryName);
+                    }
+                }
+                );
+            }
+        }
+
         private RelayCommand addNewAccount;
         public RelayCommand AddNewAccount
         {
@@ -208,9 +238,9 @@ namespace FinApp.ViewModel
                 {
                     Window wnd = obj as Window;
                     string resultStr = "";
-                    if (AccountName.Length == 0 || AccountName.Replace(" ", "").Length == 0)
+                    if (AccountName == null || AccountName.Length == 0 || AccountName.Replace(" ", "").Length == 0)
                     {
-                        MessageBox.Show("123");
+                        SetRedBlockControl(wnd, "AccountName");
                     }
                     else if (AccountType == null)
                     {
