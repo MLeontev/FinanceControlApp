@@ -202,7 +202,9 @@ namespace FinApp.ViewModel
 
         public static int IncomeSum { get; set; }
 
-        public static string IncomeCategorie { get; set; }
+        public static Category IncomeCategorie { get; set; }
+
+        public static Account IncomeAccount { get; set; }
 
         public static DateTime IncomeDate { get; set; }
 
@@ -253,6 +255,36 @@ namespace FinApp.ViewModel
                     else
                     {
                         resultStr = DataWorker.CreateAccount(AccountType, AccountName, AccountBalance);
+                    }
+                }
+                );
+            }
+        }
+
+        private RelayCommand addNewIncome;
+        public RelayCommand AddNewIncome
+        {
+            get
+            {
+                return addNewIncome ?? new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window;
+                    string resultStr = "";
+                    if (IncomeSum == null || IncomeSum < 0) 
+                    {
+                        SetRedBlockControl(wnd, "IncomeSum");
+                    }
+                    else if (IncomeCategorie == null)
+                    {
+                        SetRedBlockControl(wnd, "IncomeCategorie");
+                    }
+                    else if (IncomeAccount == null)
+                    {
+                        SetRedBlockControl(wnd, "IncomeAccount");
+                    }
+                    else
+                    {
+                        resultStr = DataWorker.CreateOperation(IncomeAccount, IncomeSum, IncomeCategorie, IncomeDate, 1);
                     }
                 }
                 );

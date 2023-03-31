@@ -6,19 +6,27 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
-        Title="Новый доход" Height="300" Width="400">
+        Title="Новый доход" Height="400" Width="400"
+        Name="AddNewIncomeWnd">
     <Grid>
         <StackPanel VerticalAlignment="Center">
             
             <TextBlock Text="Добавление дохода" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 20 0 20"></TextBlock>
 
-            <TextBox x:Name="IncomeSum" materialDesign:HintAssist.Hint="Введите сумму" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
+            <TextBox x:Name="IncomeSum" materialDesign:HintAssist.Hint="Введите сумму" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" Text="{Binding IncomeSum}"/>
 
-            <ComboBox x:Name="IncomeCategory" materialDesign:HintAssist.Hint="Выберите категорию" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0"></ComboBox>
+            <ComboBox x:Name="IncomeCategory" materialDesign:HintAssist.Hint="Выберите категорию" ItemsSource="{Binding AllCategories}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0" Text="{Binding IncomeCategory}">
+                
+            </ComboBox>
 
-            <DatePicker x:Name="IncomeDate" Margin="20" materialDesign:HintAssist.Hint="Выберите дату"/>
+            <ComboBox x:Name="IncomeAccount" materialDesign:HintAssist.Hint="Выберите счет" ItemsSource="{Binding AllAccounts}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0" Text="{Binding IncomeAccount}">
+                
+            </ComboBox>
 
-            <Button Content="Добавить" Margin="20"/>
+            <DatePicker x:Name="IncomeDate" Margin="20" materialDesign:HintAssist.Hint="Выберите дату" Text="{Binding IncomeDate}"/>
+
+            <Button Content="Добавить" Margin="20" Command="{Binding AddNewIncome}"
+                    CommandParameter="{Binding ElementName=AddNewIncomeWnd}"/>
             
         </StackPanel>
     </Grid>
