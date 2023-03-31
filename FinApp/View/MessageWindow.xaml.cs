@@ -1,5 +1,4 @@
-﻿using FinApp.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,14 +15,19 @@ using System.Windows.Shapes;
 namespace FinApp.View
 {
     /// <summary>
-    /// Логика взаимодействия для AddNewExpense.xaml
+    /// Логика взаимодействия для MessageWindow.xaml
     /// </summary>
-    public partial class AddNewExpense : Window
+    public partial class MessageWindow : Window
     {
-        public AddNewExpense()
+        public MessageWindow(string text)
         {
             InitializeComponent();
-            DataContext = new DataManageViewModel();
+            Message.Text = text;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

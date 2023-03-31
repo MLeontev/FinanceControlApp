@@ -19,6 +19,15 @@ namespace FinApp.Model.Data
             }
         }
 
+        //получить категорию по id категории
+        public static Category GetCategoryById(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Category category = db.Categories.FirstOrDefault(a => a.Id == id);
+                return category;
+            }
+        }
 
         //получить все категории
         public static List<Category> GetAllCategories()
@@ -70,9 +79,6 @@ namespace FinApp.Model.Data
             }
         }
 
-
-
-
         //получить все операции по счету
         public static List<Operation> GetAllOperationsByAccountId(int id)
         {
@@ -103,6 +109,35 @@ namespace FinApp.Model.Data
             }
         }
 
+        //получить все операции по категории
+        public static List<Operation> GetAllOperationsByCategoryId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Operation> operations = (from operation in GetAllOperations() where operation.CategoryId == id select operation).ToList();
+                return operations;
+            }
+        }
+
+        //получить все доходы по категории
+        public static List<Operation> GetAllIncomesByCategoryId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Operation> incomes = (from operation in GetAllOperationsByCategoryId(id) where operation.IsIncome == 1 select operation).ToList();
+                return incomes;
+            }
+        }
+
+        //получить все расходы по категории
+        public static List<Operation> GetAllExpensesByCategoryId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Operation> expenses = (from operation in GetAllOperationsByCategoryId(id) where operation.IsIncome == 0 select operation).ToList();
+                return expenses;
+            }
+        }
 
         //создать счет
         public static string CreateAccount(string type, string name, int balance)
@@ -158,7 +193,7 @@ namespace FinApp.Model.Data
                 {
                     AccountId = account.Id,
                     Amount = amount,
-                    Category = category,
+                    CategoryId = category.Id,
                     Date = date,
                     IsIncome = isIncome
                 };

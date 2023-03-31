@@ -6,19 +6,36 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
-        Title="Новый расход" Height="300" Width="400">
+        Title="Новый расход" Height="400" Width="400"
+        Name="AddNewExpenseWnd">
     <Grid>
         <StackPanel VerticalAlignment="Center">
 
             <TextBlock Text="Добавление расхода" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 20 0 20"></TextBlock>
 
-            <TextBox x:Name="ExpenseSum" materialDesign:HintAssist.Hint="Введите сумму" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
+            <TextBox x:Name="ExpenseSum" materialDesign:HintAssist.Hint="Введите сумму" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" Text="{Binding ExpenseSum}"/>
 
-            <ComboBox x:Name="ExpenseCategories" materialDesign:HintAssist.Hint="Выберите категорию" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0"></ComboBox>
+            <ComboBox x:Name="ExpenseCategory"
+                      materialDesign:HintAssist.Hint="Выберите категорию"
+                      ItemsSource="{Binding AllCategories}"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                      Margin="20 0"
+                      SelectedItem="{Binding ExpenseCategory}"
+                      DisplayMemberPath="Name"/>
 
-            <DatePicker Margin="20" materialDesign:HintAssist.Hint="Выберите дату"/>
 
-            <Button Content="Добавить" Margin="20" />
+            <ComboBox x:Name="ExpenseAccount"
+                      materialDesign:HintAssist.Hint="Выберите счет"
+                      ItemsSource="{Binding AllAccounts}"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                      Margin="20 0"
+                      SelectedItem="{Binding ExpenseAccount}"
+                      DisplayMemberPath="Name"/>
+
+            <DatePicker Margin="20" materialDesign:HintAssist.Hint="Текущая дата" Text="{Binding ExpenseDate}" />
+
+            <Button Content="Добавить" Margin="20" Command="{Binding AddNewExpense}"
+                    CommandParameter="{Binding ElementName=AddNewExpenseWnd}"/>
 
         </StackPanel>
     </Grid>

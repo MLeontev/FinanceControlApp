@@ -17,13 +17,17 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding AllOperations}">
+                    <ListView x:Name="ViewAllOperations" ItemsSource="{Binding AllOperations}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="150" Header="Дата"/>
-                                <GridViewColumn Width="150" Header="Сумма"/>
-                                <GridViewColumn Width="150" Header="Счет"/>
-                                <GridViewColumn Width="150" Header="Категория"/>
+                                <GridViewColumn Width="150" Header="Дата"
+                                                DisplayMemberBinding="{Binding OperationDate}"/>
+                                <GridViewColumn Width="150" Header="Сумма"
+                                                DisplayMemberBinding="{Binding Amount}"/>
+                                <GridViewColumn Width="150" Header="Счет"
+                                                DisplayMemberBinding="{Binding OperationAccount.Name}"/>
+                                <GridViewColumn Width="150" Header="Категория"
+                                                DisplayMemberBinding="{Binding OperationCategory.Name}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -42,12 +46,19 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding AllCategories}">
+                    <ListView x:Name="ViewAllCategories" ItemsSource="{Binding AllCategories}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="150" Header="Категория"/>
-                                <GridViewColumn Width="150" Header="Сумма"/>
-                                <GridViewColumn Width="150" Header="Процент"/>
+                                <GridViewColumn Width="150" Header="Категория"
+                                                DisplayMemberBinding="{Binding Name}" />
+                                <GridViewColumn Width="150" Header="Потрачено"
+                                                DisplayMemberBinding="{Binding CategoryExpensesSum}" />
+                                <GridViewColumn Width="150" Header="Получено"
+                                                DisplayMemberBinding="{Binding CategoryIncomesSum}" />
+                                <GridViewColumn Width="150" Header="Процент трат"
+                                                DisplayMemberBinding="{Binding CategoryIncomesSum}" />
+                                <GridViewColumn Width="150" Header="Процент доходов"
+                                                DisplayMemberBinding="{Binding CategoryIncomePercent}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -65,11 +76,13 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding AllAccounts}">
+                    <ListView x:Name="ViewAllAccounts" ItemsSource="{Binding AllAccounts}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="150" Header="Счет"/>
-                                <GridViewColumn Width="150" Header="Баланс"/>
+                                <GridViewColumn Width="150" Header="Счет"
+                                                DisplayMemberBinding="{Binding Name}" />
+                                <GridViewColumn Width="150" Header="Баланс"
+                                                DisplayMemberBinding="{Binding CurrentBalance}" />
                             </GridView>
                         </ListView.View>
                     </ListView>

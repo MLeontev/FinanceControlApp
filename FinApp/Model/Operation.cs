@@ -27,5 +27,23 @@ namespace FinApp.Model
                 return DataWorker.GetAccountById(AccountId);
             }
         }
+
+        [NotMapped]
+        public Category OperationCategory
+        {
+            get
+            {
+                return DataWorker.GetCategoryById(CategoryId);
+            }
+        }
+
+        [NotMapped]
+        public string OperationDate
+        {
+            get
+            {
+                return Date.ToString("D");
+            }
+        }
     }
 }

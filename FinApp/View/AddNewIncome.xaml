@@ -15,15 +15,24 @@
 
             <TextBox x:Name="IncomeSum" materialDesign:HintAssist.Hint="Введите сумму" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" Text="{Binding IncomeSum}"/>
 
-            <ComboBox x:Name="IncomeCategory" materialDesign:HintAssist.Hint="Выберите категорию" ItemsSource="{Binding AllCategories}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0" Text="{Binding IncomeCategory}">
-                
-            </ComboBox>
+            <ComboBox x:Name="IncomeCategory"
+                      materialDesign:HintAssist.Hint="Выберите категорию"
+                      ItemsSource="{Binding AllCategories}"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                      Margin="20 0"
+                      SelectedItem="{Binding IncomeCategory}"
+                      DisplayMemberPath="Name"/>
 
-            <ComboBox x:Name="IncomeAccount" materialDesign:HintAssist.Hint="Выберите счет" ItemsSource="{Binding AllAccounts}" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0" Text="{Binding IncomeAccount}">
-                
-            </ComboBox>
 
-            <DatePicker x:Name="IncomeDate" Margin="20" materialDesign:HintAssist.Hint="Выберите дату" Text="{Binding IncomeDate}"/>
+            <ComboBox x:Name="IncomeAccount"
+                      materialDesign:HintAssist.Hint="Выберите счет"
+                      ItemsSource="{Binding AllAccounts}"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                      Margin="20 0"
+                      SelectedItem="{Binding IncomeAccount}"
+                      DisplayMemberPath="Name"/>
+
+            <DatePicker x:Name="IncomeDate" Margin="20" materialDesign:HintAssist.Hint="Текущая дата" Text="{Binding IncomeDate}"/>
 
             <Button Content="Добавить" Margin="20" Command="{Binding AddNewIncome}"
                     CommandParameter="{Binding ElementName=AddNewIncomeWnd}"/>

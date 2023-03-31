@@ -191,6 +191,12 @@ namespace FinApp.ViewModel
             Control block = wnd.FindName(blockname) as Control;
             block.BorderBrush = Brushes.Red;
         }
+        
+        private void SetDefaultBlockControl(Window wnd, string blockname)
+        {
+            Control block = wnd.FindName(blockname) as Control;
+            block.BorderBrush = Brushes.Gray;
+        }
 
         public static string AccountName { get; set; }
 
@@ -202,11 +208,19 @@ namespace FinApp.ViewModel
 
         public static int IncomeSum { get; set; }
 
-        public static Category IncomeCategorie { get; set; }
+        public static Category IncomeCategory { get; set; }
 
         public static Account IncomeAccount { get; set; }
 
-        public static DateTime IncomeDate { get; set; }
+        public static DateTime IncomeDate { get; set; } = DateTime.Now.Date;
+
+        public static int ExpenseSum { get; set; }
+
+        public static Category ExpenseCategory { get; set; }
+
+        public static Account ExpenseAccount { get; set; }
+
+        public static DateTime ExpenseDate { get; set; } = DateTime.Now.Date;
 
         #region Команды для добавления
         private RelayCommand addNewCategory;
@@ -224,7 +238,12 @@ namespace FinApp.ViewModel
                     }
                     else
                     {
+                        SetDefaultBlockControl(wnd, "CategoryName");
                         resultStr = DataWorker.CreateCategory(CategoryName);
+                        ShowMessage(resultStr);
+                        UpdateAll();
+                        SetNullToProperties();
+                        wnd.Close();
                     }
                 }
                 );
@@ -254,7 +273,14 @@ namespace FinApp.ViewModel
                     }
                     else
                     {
+                        SetDefaultBlockControl(wnd, "AccountName");
+                        SetDefaultBlockControl(wnd, "AccountTypes");
+                        SetDefaultBlockControl(wnd, "AccountBalance");
                         resultStr = DataWorker.CreateAccount(AccountType, AccountName, AccountBalance);
+                        ShowMessage(resultStr);
+                        UpdateAll();
+                        SetNullToProperties();
+                        wnd.Close();
                     }
                 }
                 );
@@ -270,21 +296,71 @@ namespace FinApp.ViewModel
                 {
                     Window wnd = obj as Window;
                     string resultStr = "";
-                    if (IncomeSum == null || IncomeSum < 0) 
+                    if (IncomeSum <= 0) 
                     {
                         SetRedBlockControl(wnd, "IncomeSum");
                     }
-                    else if (IncomeCategorie == null)
+                    else if (IncomeCategory == null)
                     {
-                        SetRedBlockControl(wnd, "IncomeCategorie");
+                        SetDefaultBlockControl(wnd, "IncomeSum");
+                        SetRedBlockControl(wnd, "IncomeCategory");
                     }
                     else if (IncomeAccount == null)
                     {
+                        SetDefaultBlockControl(wnd, "IncomeSum");
+                        SetDefaultBlockControl(wnd, "IncomeCategory");
                         SetRedBlockControl(wnd, "IncomeAccount");
                     }
                     else
                     {
-                        resultStr = DataWorker.CreateOperation(IncomeAccount, IncomeSum, IncomeCategorie, IncomeDate, 1);
+                        SetDefaultBlockControl(wnd, "IncomeSum");
+                        SetDefaultBlockControl(wnd, "IncomeCategory");
+                        SetDefaultBlockControl(wnd, "IncomeAccount");
+                        resultStr = DataWorker.CreateOperation(IncomeAccount, IncomeSum, IncomeCategory, IncomeDate, 1);
+                        ShowMessage(resultStr);
+                        UpdateAll();
+                        SetNullToProperties();
+                        wnd.Close();
+                    }
+                }
+                );
+            }
+        }
+
+        private RelayCommand addNewExpense;
+        public RelayCommand AddNewExpense
+        {
+            get
+            {
+                return addNewExpense ?? new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window;
+                    string resultStr = "";
+                    if (ExpenseSum <= 0)
+                    {
+                        SetRedBlockControl(wnd, "ExpenseSum");
+                    }
+                    else if (ExpenseCategory == null)
+                    {
+                        SetDefaultBlockControl(wnd, "ExpenseSum");
+                        SetRedBlockControl(wnd, "ExpenseCategory");
+                    }
+                    else if (ExpenseAccount == null)
+                    {
+                        SetDefaultBlockControl(wnd, "ExpenseSum");
+                        SetDefaultBlockControl(wnd, "ExpenseCategory");
+                        SetRedBlockControl(wnd, "ExpenseAccount");
+                    }
+                    else
+                    {
+                        SetDefaultBlockControl(wnd, "ExpenseSum");
+                        SetDefaultBlockControl(wnd, "ExpenseCategory");
+                        SetDefaultBlockControl(wnd, "ExpenseAccount");
+                        resultStr = DataWorker.CreateOperation(ExpenseAccount, ExpenseSum, ExpenseCategory, ExpenseDate, 0);
+                        ShowMessage(resultStr);
+                        UpdateAll();
+                        SetNullToProperties();
+                        wnd.Close();
                     }
                 }
                 );
@@ -292,6 +368,65 @@ namespace FinApp.ViewModel
         }
 
         #endregion
+
+        #region Обновить View
+        private void SetNullToProperties()
+        {
+            AccountName = null;
+            AccountBalance = 0;
+            AccountType = null;
+            CategoryName = null;
+            IncomeSum = 0;
+            IncomeCategory = null;
+            IncomeAccount = null;
+            IncomeDate = DateTime.Now;
+            ExpenseSum = 0;
+            ExpenseCategory = null;
+            ExpenseAccount = null;
+            ExpenseDate = DateTime.Now;
+        }
+
+        private void UpdateAll()
+        {
+            UpdateAllAccountsView();
+            UpdateAllCategoriesView();
+            UpdateAllOperationsView();
+        }
+
+        private void UpdateAllAccountsView()
+        {
+            AllAccounts = DataWorker.GetAllAccounts();
+            MainWindow.AllAccountsView.ItemsSource = null;
+            MainWindow.AllAccountsView.Items.Clear();
+            MainWindow.AllAccountsView.ItemsSource = AllAccounts;
+            MainWindow.AllAccountsView.Items.Refresh();
+        }
+
+        private void UpdateAllCategoriesView()
+        {
+            AllCategories = DataWorker.GetAllCategories();
+            MainWindow.AllCategoriesView.ItemsSource = null;
+            MainWindow.AllCategoriesView.Items.Clear();
+            MainWindow.AllCategoriesView.ItemsSource = AllCategories;
+            MainWindow.AllCategoriesView.Items.Refresh();
+        }
+
+        private void UpdateAllOperationsView()
+        {
+            AllOperations = DataWorker.GetAllOperations();
+            MainWindow.AllOperationsView.ItemsSource = null;
+            MainWindow.AllOperationsView.Items.Clear();
+            MainWindow.AllOperationsView.ItemsSource = AllOperations;
+            MainWindow.AllOperationsView.Items.Refresh();
+        }
+        #endregion
+
+
+        private void ShowMessage(string message)
+        {
+            MessageWindow messageWindow = new MessageWindow(message);
+            SetCenterPositionAndOpen(messageWindow);
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
