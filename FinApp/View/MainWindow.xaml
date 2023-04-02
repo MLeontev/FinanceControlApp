@@ -7,7 +7,13 @@
         mc:Ignorable="d"
         Title="Мои финансы" Height="600" Width="900">
     <Grid>
-        <TabControl TabStripPlacement="Right">
+        <TabControl TabStripPlacement="Right" SelectedItem="{Binding SelectedTabItem}">
+            <TabControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Редактировать" Command="{Binding OpenEditItemWnd}"/>
+                    <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                </ContextMenu>
+            </TabControl.ContextMenu>
             <TabItem Name="ListTab">
                 <TabItem.Header>
                     <TextBlock Text="Операции"/>
@@ -17,7 +23,8 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView x:Name="ViewAllOperations" ItemsSource="{Binding AllOperations}">
+                    <ListView x:Name="ViewAllOperations" ItemsSource="{Binding AllOperations}"
+                              SelectedItem="{Binding SelectedOperation}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Дата"
@@ -46,7 +53,8 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView x:Name="ViewAllCategories" ItemsSource="{Binding AllCategories}">
+                    <ListView x:Name="ViewAllCategories" ItemsSource="{Binding AllCategories}"
+                              SelectedItem="{Binding SelectedCategory}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Категория"
@@ -56,7 +64,7 @@
                                 <GridViewColumn Width="150" Header="Получено"
                                                 DisplayMemberBinding="{Binding CategoryIncomesSum}" />
                                 <GridViewColumn Width="150" Header="Процент трат"
-                                                DisplayMemberBinding="{Binding CategoryIncomesSum}" />
+                                                DisplayMemberBinding="{Binding CategoryExpensePercent}" />
                                 <GridViewColumn Width="150" Header="Процент доходов"
                                                 DisplayMemberBinding="{Binding CategoryIncomePercent}" />
                             </GridView>
@@ -76,7 +84,8 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView x:Name="ViewAllAccounts" ItemsSource="{Binding AllAccounts}">
+                    <ListView x:Name="ViewAllAccounts" ItemsSource="{Binding AllAccounts}"
+                              SelectedItem="{Binding SelectedAccount}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Счет"

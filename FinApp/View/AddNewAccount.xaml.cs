@@ -1,4 +1,5 @@
-﻿using FinApp.ViewModel;
+﻿using FinApp.Model;
+using FinApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

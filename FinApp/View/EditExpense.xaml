@@ -6,19 +6,37 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
-        Title="Изменение расхода" Height="300" Width="400">
+        Title="Изменение расхода" Height="300" Width="400"
+        Name="ChangeExpenseWnd">
     <Grid>
         <StackPanel VerticalAlignment="Center">
 
             <TextBlock Text="Редактирование расхода" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 20 0 20"></TextBlock>
 
-            <TextBox x:Name="ExpenseSum" materialDesign:HintAssist.Hint="Изменить сумму" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
+            <TextBox x:Name="ExpenseSum" materialDesign:HintAssist.Hint="Изменить сумму" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" Text="{Binding ExpenseSum}"/>
 
-            <ComboBox x:Name="ExpenseCategories" materialDesign:HintAssist.Hint="Изменить категорию" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0"></ComboBox>
+            <ComboBox x:Name="ExpenseCategory"
+                      materialDesign:HintAssist.Hint="Изменить категорию" 
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                      ItemsSource="{Binding AllCategories}" 
+                      Margin="20 0" 
+                      SelectedItem="{Binding ExpenseCategory}"
+                      DisplayMemberPath="Name">
+            </ComboBox>
 
-            <DatePicker Margin="20" materialDesign:HintAssist.Hint="Изменить дату"/>
+            <ComboBox x:Name="ExpenseAccount" 
+                      materialDesign:HintAssist.Hint="Изменить счет" 
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                      Margin="20 0" 
+                      ItemsSource="{Binding AllAccounts}" 
+                      SelectedItem="{Binding ExpenseAccount}"
+                      DisplayMemberPath="Name">
+            </ComboBox>
 
-            <Button Content="Изменить" Margin="20"/>
+            <DatePicker x:Name="ExpenseDate" Margin="20" materialDesign:HintAssist.Hint="Изменить дату" Text="{Binding ExpenseDate}"/>
+
+            <Button Content="Изменить" Margin="20" Command="{Binding EditExpense}"
+                    CommandParameter="{Binding ElementName=ChangeExpenseWnd}"/>
 
         </StackPanel>
     </Grid>

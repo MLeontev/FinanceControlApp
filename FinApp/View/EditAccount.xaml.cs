@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FinApp.Model;
+using FinApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,14 @@ namespace FinApp.View
     /// </summary>
     public partial class EditAccount : Window
     {
-        public EditAccount()
+        public EditAccount(Account accountToEdit)
         {
             InitializeComponent();
+            DataContext = new DataManageViewModel();
+            DataManageViewModel.SelectedAccount = accountToEdit;
+            DataManageViewModel.AccountName = accountToEdit.Name;
+            DataManageViewModel.AccountBalance = accountToEdit.Balance;
+            DataManageViewModel.AccountType = accountToEdit.Type;
         }
     }
 }

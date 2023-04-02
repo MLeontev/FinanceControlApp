@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FinApp.Model;
+using FinApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,12 @@ namespace FinApp.View
     /// </summary>
     public partial class EditCategory : Window
     {
-        public EditCategory()
+        public EditCategory(Category categoryToEdit)
         {
             InitializeComponent();
+            DataContext = new DataManageViewModel();
+            DataManageViewModel.SelectedCategory = categoryToEdit;
+            DataManageViewModel.CategoryName = categoryToEdit.Name;
         }
     }
 }

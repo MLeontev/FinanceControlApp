@@ -64,7 +64,37 @@ namespace FinApp.Model
                     categoryIncomes += op.Amount;
                 }
 
-                return categoryIncomes/total * 100;
+                if (total == 0) 
+                    return 0;
+                else
+                    return categoryIncomes/total * 100;
+            }
+        }
+
+        [NotMapped]
+        public int CategoryExpensePercent
+        {
+            get
+            {
+                List<Operation> list = DataWorker.GetAllExpensesByCategoryId(Id);
+
+                List<Operation> expenses = DataWorker.GetAllExpenses();
+                int total = 0;
+                foreach (Operation op in expenses)
+                {
+                    total += op.Amount;
+                }
+
+                int categryExpenses = 0;
+                foreach (Operation op in list)
+                {
+                    categryExpenses += op.Amount;
+                }
+
+                if (total == 0) 
+                    return 0;
+                else
+                    return categryExpenses / total * 100;
             }
         }
     }

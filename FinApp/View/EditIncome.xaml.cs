@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FinApp.Model;
+using FinApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,15 @@ namespace FinApp.View
     /// </summary>
     public partial class EditIncome : Window
     {
-        public EditIncome()
+        public EditIncome(Operation incomeToEdit)
         {
             InitializeComponent();
+            DataContext = new DataManageViewModel();
+            DataManageViewModel.SelectedOperation = incomeToEdit;
+            DataManageViewModel.IncomeSum = incomeToEdit.Amount;
+            DataManageViewModel.IncomeCategory = incomeToEdit.Category;
+            DataManageViewModel.IncomeAccount = incomeToEdit.Account;
+            DataManageViewModel.IncomeDate = incomeToEdit.Date;
         }
     }
 }

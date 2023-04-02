@@ -6,15 +6,17 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
-        Title="Изменение категории" Height="250" Width="400">
+        Title="Изменение категории" Height="250" Width="400"
+        Name="ChangeCategoryWnd">
     <Grid>
         <StackPanel VerticalAlignment="Center">
 
             <TextBlock Text="Редактирование категории категории" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 20 0 20"></TextBlock>
 
-            <TextBox x:Name="CategoryName" materialDesign:HintAssist.Hint="Изменить название" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
+            <TextBox x:Name="CategoryName" materialDesign:HintAssist.Hint="Изменить название" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" Text="{Binding CategoryName}" />
 
-            <Button Content="Изменить" Margin="20"/>
+            <Button Content="Изменить" Margin="20" Command="{Binding EditCategory}"
+                    CommandParameter="{Binding ElementName=ChangeCategoryWnd}"/>
 
         </StackPanel>
     </Grid>

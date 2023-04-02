@@ -6,19 +6,29 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
-        Title="Изменение счета" Height="250" Width="400">
+        Title="Изменение счета" Height="250" Width="400"
+        Name="ChangeAccountWnd">
     <Grid>
         <StackPanel VerticalAlignment="Center">
 
             <TextBlock Text="Редактирование счета" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 20 0 20"></TextBlock>
 
-            <TextBox x:Name="AccountName" materialDesign:HintAssist.Hint="Изменить название" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
+            <TextBox x:Name="AccountName" materialDesign:HintAssist.Hint="Изменить название" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" Text="{Binding AccountName}"/>
 
-            <TextBox x:Name="Balance" materialDesign:HintAssist.Hint="Изменить баланс" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" />
+            <TextBox x:Name="AccountBalance" materialDesign:HintAssist.Hint="Изменить баланс" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="20 0" Text="{Binding AccountBalance}"/>
 
-            <ComboBox x:Name="AccountTypes" materialDesign:HintAssist.Hint="Изменить тип счета" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="20 0"></ComboBox>
+            <ComboBox x:Name="AccountType" 
+                      materialDesign:HintAssist.Hint="Изменить тип счета" 
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                      Margin="20 0"
+                      SelectedItem="{Binding AccountType}">
+                <TextBlock>Наличные</TextBlock>
+                <TextBlock>Дебетовая карта</TextBlock>
+                <TextBlock>Кредитная карта</TextBlock>
+            </ComboBox>
 
-            <Button Content="Изменить" Margin="20"/>
+            <Button Content="Изменить" Margin="20" Command="{Binding EditAccount}"
+                    CommandParameter="{Binding ElementName=ChangeAccountWnd}"/>
 
         </StackPanel>
     </Grid>

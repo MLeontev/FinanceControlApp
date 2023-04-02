@@ -231,7 +231,7 @@ namespace FinApp.Model.Data
         }
 
         //удалить операцию
-        public static string DeleteIncome(Operation operation)
+        public static string DeleteOperation(Operation operation)
         {
             string result = "Такой операции не существует";
             using (ApplicationContext db = new ApplicationContext())
@@ -261,7 +261,7 @@ namespace FinApp.Model.Data
         }
 
         //редактировать операцию
-        public static string EditIncome(Operation oldOperation, Account newAccount, int newAmount, Category newCategory, DateTime newDate, int newIsIncome)
+        public static string EditOperation(Operation oldOperation, Account newAccount, int newAmount, Category newCategory, DateTime newDate, int newIsIncome)
         {
             string result = "Такого дохода не существует";
             using (ApplicationContext db = new ApplicationContext())
@@ -274,6 +274,20 @@ namespace FinApp.Model.Data
                 operation.IsIncome = newIsIncome;
                 db.SaveChanges();
                 result = $"Доход за {operation.Date} изменен";
+            }
+            return result;
+        }
+
+        //редактировать категорию
+        public static string EditCategory(Category oldCategory, string newName)
+        {
+            string result = "Такой категории не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Category operation = db.Categories.FirstOrDefault(category => category.Id == oldCategory.Id);
+                operation.Name = newName;
+                db.SaveChanges();
+                result = $"Категория изменена";
             }
             return result;
         }

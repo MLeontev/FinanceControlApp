@@ -99,27 +99,27 @@ namespace FinApp.ViewModel
             window.Close();
         }
 
-        private void OpenEditAccountWindowMethod()
+        private void OpenEditAccountWindowMethod(Account account)
         {
-            EditAccount editAccountWindow = new EditAccount();
+            EditAccount editAccountWindow = new EditAccount(account);
             SetCenterPositionAndOpen(editAccountWindow);
         }
 
-        private void OpenEditCategoryWindowMethod()
+        private void OpenEditCategoryWindowMethod(Category category)
         {
-            EditCategory editCategoryWindow = new EditCategory();
+            EditCategory editCategoryWindow = new EditCategory(category);
             SetCenterPositionAndOpen(editCategoryWindow);
         }
 
-        private void OpenEditExpenseWindowMethod()
+        private void OpenEditExpenseWindowMethod(Operation expense)
         {
-            EditExpense editExpenseWindow = new EditExpense();
+            EditExpense editExpenseWindow = new EditExpense(expense);
             SetCenterPositionAndOpen(editExpenseWindow);
         }
 
-        private void OpenEditIncomeWindowMethod()
+        private void OpenEditIncomeWindowMethod(Operation income)
         {
-            EditIncome editIncomeWindow = new EditIncome();
+            EditIncome editIncomeWindow = new EditIncome(income);
             SetCenterPositionAndOpen(editIncomeWindow);
         }
 
@@ -184,6 +184,40 @@ namespace FinApp.ViewModel
             }
         }
 
+        private RelayCommand openEditItemWnd;
+
+        public RelayCommand OpenEditItemWnd
+        {
+            get
+            {
+                return openEditItemWnd ?? new RelayCommand(obj =>
+                {
+                    string resultStr = "Ничего не выбрано";
+                    //если категория
+                    if (SelectedTabItem.Name == "CategoriesTab" && SelectedCategory != null)
+                    {
+                        OpenEditCategoryWindowMethod(SelectedCategory);
+                    }
+                    //если счет
+                    if (SelectedTabItem.Name == "AccountsTab" && SelectedAccount != null)
+                    {
+                        OpenEditAccountWindowMethod(SelectedAccount);
+                    }
+                    //если расход
+                    if (SelectedTabItem.Name == "ListTab" && SelectedOperation != null && SelectedOperation.IsIncome == 0)
+                    {
+                        OpenEditExpenseWindowMethod(SelectedOperation);
+                    }
+                    //если доход
+                    if (SelectedTabItem.Name == "ListTab" && SelectedOperation != null && SelectedOperation.IsIncome == 1)
+                    {
+                        OpenEditIncomeWindowMethod(SelectedOperation);
+                    }
+                }
+                );
+            }
+        }
+
         #endregion
 
         private void SetRedBlockControl(Window wnd, string blockname)
@@ -221,6 +255,170 @@ namespace FinApp.ViewModel
         public static Account ExpenseAccount { get; set; }
 
         public static DateTime ExpenseDate { get; set; } = DateTime.Now.Date;
+
+        //свойства для выделения элементов
+        public TabItem SelectedTabItem { get; set; }
+
+        public static Operation SelectedOperation { get; set; }
+
+        public static Category SelectedCategory { get; set; }
+
+        public static Account SelectedAccount { get; set; }
+
+        #region режактирование и удаление элементов
+        //удаление элементов
+        private RelayCommand deleteItem;
+        public RelayCommand DeleteItem
+        {
+            get
+            {
+                return deleteItem ?? new RelayCommand(obj =>
+                {
+                    string resultStr = "Ничего не выбрано";
+                    //если операция
+                    if (SelectedTabItem.Name == "ListTab" && SelectedOperation != null)
+                    {
+                        resultStr = DataWorker.DeleteOperation(SelectedOperation);
+                        UpdateAll();
+                    }
+                    //если категория
+                    if (SelectedTabItem.Name == "CategoriesTab" && SelectedCategory != null)
+                    {
+                        resultStr = DataWorker.DeleteCategory(SelectedCategory);
+                        UpdateAll();
+                    }
+                    //если счет
+                    if (SelectedTabItem.Name == "AccountsTab" && SelectedAccount != null)
+                    {
+                        resultStr = DataWorker.DeleteAccount(SelectedAccount);
+                        UpdateAll();
+                    }
+                    //обновление
+                    SetNullToProperties();
+                    ShowMessage(resultStr);
+                }
+                    );
+            }
+        }
+
+        //редактирование
+        private RelayCommand editExpense;
+        public RelayCommand EditExpense
+        {
+            get
+            {
+                return editExpense ?? new RelayCommand(obj =>
+                {
+                    Window window = obj as Window;
+                    string resultStr = "Не выбран расход";
+                    string noCategoryStr = "Не выбрана категория";
+                    string noAccountStr = "Не выбран счет";
+                    if (SelectedOperation != null)
+                    {
+                        if (ExpenseCategory != null && ExpenseAccount != null)
+                        {
+                            resultStr = DataWorker.EditOperation(SelectedOperation, ExpenseAccount, ExpenseSum, ExpenseCategory, ExpenseDate, 0);
+
+                            UpdateAll();
+                            SetNullToProperties();
+                            ShowMessage(resultStr);
+                            window.Close();
+                        }
+                        else if (ExpenseCategory == null) 
+                            ShowMessage(noCategoryStr);
+                        else 
+                            ShowMessage(noAccountStr);
+                    }
+                    else ShowMessage(resultStr);
+
+                }
+                );
+            }
+        }
+
+        private RelayCommand editIncome;
+        public RelayCommand EditIncome
+        {
+            get
+            {
+                return editIncome ?? new RelayCommand(obj =>
+                {
+                    Window window = obj as Window;
+                    string resultStr = "Не выбран доход";
+                    string noCategoryStr = "Не выбрана категория";
+                    string noAccountStr = "Не выбран счет";
+                    if (SelectedOperation != null)
+                    {
+                        if (IncomeCategory != null && IncomeAccount != null)
+                        {
+                            resultStr = DataWorker.EditOperation(SelectedOperation, IncomeAccount, IncomeSum, IncomeCategory, IncomeDate, 1);
+
+                            UpdateAll();
+                            SetNullToProperties();
+                            ShowMessage(resultStr);
+                            window.Close();
+                        }
+                        else if (IncomeCategory == null)
+                            ShowMessage(noCategoryStr);
+                        else
+                            ShowMessage(noAccountStr);
+                    }
+                    else ShowMessage(resultStr);
+
+                }
+                );
+            }
+        }
+
+        private RelayCommand editCategory;
+        public RelayCommand EditCategory
+        {
+            get
+            {
+                return editCategory ?? new RelayCommand(obj =>
+                {
+                    Window window = obj as Window;
+                    string resultStr = "Не выбрана категория";
+                    if (SelectedCategory != null)
+                    {
+                        resultStr = DataWorker.EditCategory(SelectedCategory, CategoryName);
+
+                        UpdateAll();
+                        SetNullToProperties();
+                        ShowMessage(resultStr);
+                        window.Close();                       
+                    }
+                    else ShowMessage(resultStr);
+                }
+                );
+            }
+        }
+
+        private RelayCommand editAccount;
+        public RelayCommand EditAccount
+        {
+            get
+            {
+                return editAccount ?? new RelayCommand(obj =>
+                {
+                    Window window = obj as Window;
+                    string resultStr = "Не выбрана категория";
+                    if (SelectedAccount != null)
+                    {
+                        resultStr = DataWorker.EditAccount(SelectedAccount, AccountType, AccountName, AccountBalance);
+
+                        UpdateAll();
+                        SetNullToProperties();
+                        ShowMessage(resultStr);
+                        window.Close();
+                    }
+                    else ShowMessage(resultStr);
+                }
+                );
+            }
+        }
+
+        #endregion
 
         #region Команды для добавления
         private RelayCommand addNewCategory;
