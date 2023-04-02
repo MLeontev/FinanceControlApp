@@ -32,9 +32,9 @@
                                 <GridViewColumn Width="150" Header="Сумма"
                                                 DisplayMemberBinding="{Binding Amount}"/>
                                 <GridViewColumn Width="150" Header="Счет"
-                                                DisplayMemberBinding="{Binding OperationAccount.Name}"/>
+                                                DisplayMemberBinding="{Binding Account.Name}"/>
                                 <GridViewColumn Width="150" Header="Категория"
-                                                DisplayMemberBinding="{Binding OperationCategory.Name}"/>
+                                                DisplayMemberBinding="{Binding Category.Name}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

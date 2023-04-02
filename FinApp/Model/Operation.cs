@@ -20,24 +20,6 @@ namespace FinApp.Model
         public int IsIncome { get; set; }
 
         [NotMapped]
-        public Account OperationAccount
-        {
-            get
-            {
-                return DataWorker.GetAccountById(AccountId);
-            }
-        }
-
-        [NotMapped]
-        public Category OperationCategory
-        {
-            get
-            {
-                return DataWorker.GetCategoryById(CategoryId);
-            }
-        }
-
-        [NotMapped]
         public string OperationDate
         {
             get

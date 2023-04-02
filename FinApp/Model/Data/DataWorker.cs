@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -74,7 +75,10 @@ namespace FinApp.Model.Data
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Operation> operations = db.Operations.ToList();
+                List<Operation> operations = db.Operations
+                    .Include(o => o.Category)
+                    .Include(o => o.Account)
+                    .ToList();
                 return operations;
             }
         }

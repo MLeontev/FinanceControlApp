@@ -13,6 +13,7 @@ namespace FinApp.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public List<Operation> Operations { get; set; }
 
         [NotMapped]
         public int CategoryExpensesSum
