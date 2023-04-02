@@ -32,7 +32,7 @@
                       SelectedItem="{Binding IncomeAccount}"
                       DisplayMemberPath="Name"/>
 
-            <DatePicker x:Name="IncomeDate" Margin="20" materialDesign:HintAssist.Hint="Текущая дата" Text="{Binding IncomeDate}"/>
+            <DatePicker x:Name="IncomeDate" Margin="20" materialDesign:HintAssist.Hint="Текущая дата" SelectedDate="{Binding IncomeDate}"/>
 
             <Button Content="Добавить" Margin="20" Command="{Binding AddNewIncome}"
                     CommandParameter="{Binding ElementName=AddNewIncomeWnd}"/>

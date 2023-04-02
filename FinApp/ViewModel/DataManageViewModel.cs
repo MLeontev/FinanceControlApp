@@ -246,7 +246,7 @@ namespace FinApp.ViewModel
 
         public static Account IncomeAccount { get; set; }
 
-        public static DateTime IncomeDate { get; set; } = DateTime.Now.Date;
+        public static DateTime IncomeDate { get; set; } = DateTime.Now;
 
         public static int ExpenseSum { get; set; }
 
@@ -254,7 +254,7 @@ namespace FinApp.ViewModel
 
         public static Account ExpenseAccount { get; set; }
 
-        public static DateTime ExpenseDate { get; set; } = DateTime.Now.Date;
+        public static DateTime ExpenseDate { get; set; } = DateTime.Now;
 
         //свойства для выделения элементов
         public TabItem SelectedTabItem { get; set; }
@@ -265,7 +265,7 @@ namespace FinApp.ViewModel
 
         public static Account SelectedAccount { get; set; }
 
-        #region режактирование и удаление элементов
+        #region редактирование и удаление элементов
         //удаление элементов
         private RelayCommand deleteItem;
         public RelayCommand DeleteItem

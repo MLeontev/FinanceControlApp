@@ -79,6 +79,7 @@ namespace FinApp.Model.Data
                     .Include(o => o.Category)
                     .Include(o => o.Account)
                     .ToList();
+                operations.Sort(new DateComparer());
                 return operations;
             }
         }

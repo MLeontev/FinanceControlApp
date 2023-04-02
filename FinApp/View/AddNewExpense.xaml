@@ -32,7 +32,7 @@
                       SelectedItem="{Binding ExpenseAccount}"
                       DisplayMemberPath="Name"/>
 
-            <DatePicker Margin="20" materialDesign:HintAssist.Hint="Текущая дата" Text="{Binding ExpenseDate}" />
+            <DatePicker Margin="20" materialDesign:HintAssist.Hint="Текущая дата" SelectedDate="{Binding ExpenseDate}" />
 
             <Button Content="Добавить" Margin="20" Command="{Binding AddNewExpense}"
                     CommandParameter="{Binding ElementName=AddNewExpenseWnd}"/>
