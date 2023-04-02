@@ -27,5 +27,23 @@ namespace FinApp.Model
                 return Date.ToString("D");
             }
         }
+
+        [NotMapped]
+        public string OperationType
+        {
+            get
+            {
+                return IsIncome == 1 ? "Пополнение" : "Расход";
+            }
+        }
+
+        [NotMapped]
+        public string ChangeInBalance
+        {
+            get
+            {
+                return IsIncome == 1 ? $"+{Amount}" : $"-{Amount}";
+            }
+        }
     }
 }

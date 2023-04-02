@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
-        Title="Мои финансы" Height="600" Width="900">
+        Title="Мои финансы" Height="600" Width="950">
     <Grid>
         <TabControl TabStripPlacement="Right" SelectedItem="{Binding SelectedTabItem}">
             <TabControl.ContextMenu>
@@ -28,9 +28,11 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Дата"
-                                                DisplayMemberBinding="{Binding OperationDate}"/>
+                                                DisplayMemberBinding="{Binding OperationDate}" />
+                                <GridViewColumn Width="150" Header="Тип операции"
+                                                DisplayMemberBinding="{Binding OperationType}" />
                                 <GridViewColumn Width="150" Header="Сумма"
-                                                DisplayMemberBinding="{Binding Amount}"/>
+                                                DisplayMemberBinding="{Binding ChangeInBalance}"/>
                                 <GridViewColumn Width="150" Header="Счет"
                                                 DisplayMemberBinding="{Binding Account.Name}"/>
                                 <GridViewColumn Width="150" Header="Категория"
@@ -65,7 +67,7 @@
                                                 DisplayMemberBinding="{Binding CategoryIncomesSum}" />
                                 <GridViewColumn Width="150" Header="Процент трат"
                                                 DisplayMemberBinding="{Binding CategoryExpensePercent}" />
-                                <GridViewColumn Width="150" Header="Процент доходов"
+                                <GridViewColumn Width="200" Header="Процент доходов"
                                                 DisplayMemberBinding="{Binding CategoryIncomePercent}" />
                             </GridView>
                         </ListView.View>

@@ -265,7 +265,7 @@ namespace FinApp.ViewModel
 
         public static Account SelectedAccount { get; set; }
 
-        #region редактирование и удаление элементов
+        #region Редактирование и удаление элементов
         //удаление элементов
         private RelayCommand deleteItem;
         public RelayCommand DeleteItem

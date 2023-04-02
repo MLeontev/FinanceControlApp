@@ -278,7 +278,7 @@ namespace FinApp.Model.Data
                 operation.Date = newDate;
                 operation.IsIncome = newIsIncome;
                 db.SaveChanges();
-                result = $"Доход за {operation.Date} изменен";
+                result = $"Доход за {operation.Date:D} изменен";
             }
             return result;
         }

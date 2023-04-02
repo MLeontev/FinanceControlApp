@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
-        Title="Изменение счета" Height="250" Width="400"
+        Title="Изменение счета" Height="300" Width="400"
         Name="ChangeAccountWnd">
     <Grid>
         <StackPanel VerticalAlignment="Center">
