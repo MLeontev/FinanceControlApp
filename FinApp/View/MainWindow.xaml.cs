@@ -8,6 +8,7 @@ using FinApp.Model.Data;
 using FinApp.ViewModel;
 using MaterialDesignColors.Recommended;
 using ScottPlot;
+using ScottPlot.Plottable;
 
 namespace FinApp.View
 {
@@ -20,7 +21,8 @@ namespace FinApp.View
         public static ListView AllAccountsView;
         public static ListView AllCategoriesView;
         public static ListView AllOperationsView;
-        public static WpfPlot Chart;
+        public static WpfPlot IncomeChart;
+        public static WpfPlot ExpenseChart;
         private static double[] values;
         private static string[] labels;
         
@@ -34,14 +36,66 @@ namespace FinApp.View
             AllAccountsView = ViewAllAccounts;
             AllCategoriesView = ViewAllCategories;
             AllOperationsView = ViewAllOperations;
-            Chart = ExpensePieChart;
+            IncomeChart = IncomePieChart;
+            ExpenseChart = ExpensePieChart;
 
+            UpdateIncomeChart();
             UpdateExpenseChart();
+        }
+
+        public static void UpdateIncomeChart()
+        {
+            IncomeChart.Plot.Clear();
+
+            List<Category> Categories = DataWorker.GetAllCategories();
+
+            values = new double[Categories.Count];
+            for (int i = 0; i < Categories.Count; i++)
+            {
+                int SumAmount = 0;
+                List<Operation> IncomesByCategory = DataWorker.GetAllIncomesByCategoryId(Categories[i].Id);
+                foreach (Operation expense in IncomesByCategory)
+                {
+                    SumAmount += expense.Amount;
+                }
+                values[i] = (double)SumAmount;
+            }
+
+            labels = new string[Categories.Count];
+            for (int i = 0; i < Categories.Count; i++)
+            {
+                int SumAmount = 0;
+                List<Operation> IncomesByCategory = DataWorker.GetAllIncomesByCategoryId(Categories[i].Id);
+                foreach (Operation expense in IncomesByCategory)
+                {
+                    SumAmount += expense.Amount;
+                }
+
+                labels[i] = Categories[i].Name + " " + Convert.ToString(SumAmount) + "₽";
+            }
+
+            if (labels.Length != 0 && labels.Length != 0)
+            {
+                var pie = IncomeChart.Plot.AddPie(values);
+                pie.DonutSize = .6;
+                pie.SliceLabels = labels;
+                pie.OutlineSize = 1;
+                IncomeChart.Plot.Legend();
+                IncomeChart.Visibility = Visibility.Visible;
+
+                IncomeChart.Plot.SaveFig("pie_showEverything.png");
+            }
+            else
+            {
+                IncomeChart.Visibility = Visibility.Collapsed;
+            }
+
+            IncomeChart.Refresh();
         }
 
         public static void UpdateExpenseChart()
         {
-            Chart.Plot.Clear();
+            ExpenseChart.Plot.Clear();
 
             List<Category> Categories = DataWorker.GetAllCategories();
 
@@ -70,16 +124,23 @@ namespace FinApp.View
                 labels[i] = Categories[i].Name + " " + Convert.ToString(SumAmount) + "₽";
             }
 
-            var pie = Chart.Plot.AddPie(values);
-            pie.DonutSize = .6;
-            pie.DonutLabel = "Расходы";
-            pie.SliceLabels = labels;
-            pie.OutlineSize = 1;
-            Chart.Plot.Legend();
+            if (labels.Length != 0 && labels.Length != 0)
+            {
+                var pie = ExpenseChart.Plot.AddPie(values);
+                pie.DonutSize = .6;
+                pie.SliceLabels = labels;
+                pie.OutlineSize = 1;
+                ExpenseChart.Plot.Legend();
+                ExpenseChart.Visibility = Visibility.Visible;
 
-            Chart.Plot.SaveFig("pie_showEverything.png");
+                ExpenseChart.Plot.SaveFig("pie_showEverything.png");
+            }
+            else
+            {
+                ExpenseChart.Visibility = Visibility.Collapsed;
+            }
 
-            Chart.Refresh();
+            ExpenseChart.Refresh();
         }
     }
 }

@@ -52,16 +52,34 @@
                     <TextBlock Text="Категории"/>
                 </TabItem.Header>
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
+                        <RowDefinition Height="350"/>
+                        <RowDefinition />
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <StackPanel>
-                        <TextBlock></TextBlock>
-                        <ScottPlot:WpfPlot x:Name="ExpensePieChart" Height="300"/>
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <TextBlock
+                            Text="Расходы"
+                            Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                        <ScottPlot:WpfPlot x:Name="ExpensePieChart" Height="320"/>
                     </StackPanel>
-                    <ListView x:Name="ViewAllCategories" ItemsSource="{Binding AllCategories}" Margin="0 300 0 0"
-                              SelectedItem="{Binding SelectedCategory}">
+                    <StackPanel Grid.Row="0" Grid.Column="1">
+                        <TextBlock
+                            Text="Доходы"
+                            Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                        <ScottPlot:WpfPlot x:Name="IncomePieChart" Height="320"/>
+                    </StackPanel>
+                    <ListView x:Name="ViewAllCategories" ItemsSource="{Binding AllCategories}" Margin="0 0 0 0"
+                              SelectedItem="{Binding SelectedCategory}"
+                              Grid.Row ="1" Grid.ColumnSpan = "2">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="150" Header="Категория"
@@ -77,7 +95,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan = "2" HorizontalAlignment="Center">
                         <Button Content="Новая категория" Grid.Row="1" Margin="20 0 0 0" Width="200" Command="{Binding OpenAddCategoryWindow}"/>
                     </StackPanel>
                 </Grid>

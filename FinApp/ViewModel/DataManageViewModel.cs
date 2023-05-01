@@ -592,6 +592,7 @@ namespace FinApp.ViewModel
             UpdateAllCategoriesView();
             UpdateAllOperationsView();
             MainWindow.UpdateExpenseChart();
+            MainWindow.UpdateIncomeChart();
         }
 
         private void UpdateAllAccountsView()
