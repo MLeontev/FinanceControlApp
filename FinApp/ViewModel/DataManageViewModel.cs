@@ -11,6 +11,8 @@ using System.Windows;
 using FinApp.View;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ScottPlot.Drawing.Colormaps;
+using System.Reflection.Emit;
 
 namespace FinApp.ViewModel
 {
@@ -589,6 +591,7 @@ namespace FinApp.ViewModel
             UpdateAllAccountsView();
             UpdateAllCategoriesView();
             UpdateAllOperationsView();
+            MainWindow.UpdateExpenseChart();
         }
 
         private void UpdateAllAccountsView()

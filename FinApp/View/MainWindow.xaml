@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ScottPlot="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
         Title="Мои финансы" Height="600" Width="950">
@@ -55,7 +56,11 @@
                         <RowDefinition/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <ListView x:Name="ViewAllCategories" ItemsSource="{Binding AllCategories}"
+                    <StackPanel>
+                        <TextBlock></TextBlock>
+                        <ScottPlot:WpfPlot x:Name="ExpensePieChart" Height="300"/>
+                    </StackPanel>
+                    <ListView x:Name="ViewAllCategories" ItemsSource="{Binding AllCategories}" Margin="0 300 0 0"
                               SelectedItem="{Binding SelectedCategory}">
                         <ListView.View>
                             <GridView>
