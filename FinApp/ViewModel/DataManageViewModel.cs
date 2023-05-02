@@ -131,9 +131,29 @@ namespace FinApp.ViewModel
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
         }
+
+        private void OpenFilterWindowMethod()
+        {
+            FilterWindow filterWindow = new FilterWindow();
+            SetCenterPositionAndOpen(filterWindow);
+        }
         #endregion
 
         #region Команды открытия окон
+
+        private RelayCommand openFilterWindow;
+        public RelayCommand OpenFilterWindow
+        {
+            get
+            {
+                return openFilterWindow ?? new RelayCommand(obj =>
+                {
+                    OpenFilterWindowMethod();
+                }
+                );
+            }
+        }
+
         private RelayCommand openAddAccountWindow;
         public RelayCommand OpenAddAccountWindow
         {
@@ -227,7 +247,7 @@ namespace FinApp.ViewModel
             Control block = wnd.FindName(blockname) as Control;
             block.BorderBrush = Brushes.Red;
         }
-        
+
         private void SetDefaultBlockControl(Window wnd, string blockname)
         {
             Control block = wnd.FindName(blockname) as Control;
@@ -257,6 +277,16 @@ namespace FinApp.ViewModel
         public static Account ExpenseAccount { get; set; }
 
         public static DateTime ExpenseDate { get; set; } = DateTime.Now;
+
+        #region Свойства фильтров
+        public static int MinSum { get; set; }
+        public static int MaxSum { get; set; }
+        public static string FilterCategory { get; set; }
+        public static string FilterAccount { get; set; }
+        public static DateTime FilterStartDate { get; set; }
+        public static DateTime FilterEndDate { get; set; }
+        #endregion
+
 
         //свойства для выделения элементов
         public TabItem SelectedTabItem { get; set; }

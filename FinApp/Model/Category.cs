@@ -44,59 +44,5 @@ namespace FinApp.Model
                 return sum;
             }
         }
-
-        [NotMapped]
-        public int CategoryIncomePercent
-        {
-            get
-            {
-                List<Operation> list = DataWorker.GetAllIncomesByCategoryId(Id);
-
-                List<Operation> incomes = DataWorker.GetAllIncomes();
-                int total = 0;
-                foreach (Operation op in incomes)
-                {
-                    total += op.Amount;
-                }
-
-                int categoryIncomes = 0;
-                foreach (Operation op in list)
-                {
-                    categoryIncomes += op.Amount;
-                }
-
-                if (total == 0) 
-                    return 0;
-                else
-                    return categoryIncomes/total * 100;
-            }
-        }
-
-        [NotMapped]
-        public int CategoryExpensePercent
-        {
-            get
-            {
-                List<Operation> list = DataWorker.GetAllExpensesByCategoryId(Id);
-
-                List<Operation> expenses = DataWorker.GetAllExpenses();
-                int total = 0;
-                foreach (Operation op in expenses)
-                {
-                    total += op.Amount;
-                }
-
-                int categryExpenses = 0;
-                foreach (Operation op in list)
-                {
-                    categryExpenses += op.Amount;
-                }
-
-                if (total == 0) 
-                    return 0;
-                else
-                    return categryExpenses / total * 100;
-            }
-        }
     }
 }
