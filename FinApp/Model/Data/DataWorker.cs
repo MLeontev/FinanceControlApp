@@ -296,5 +296,74 @@ namespace FinApp.Model.Data
             }
             return result;
         }
+
+        //получить операции по фильтрам
+        public static List<Operation> GetBankOperationsInRange(int minAmount, int maxAmount, DateTime startDate, DateTime endDate, int categoryId, int accountId)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var operations = db.Operations
+                    .Where(o =>
+                        o.Amount >= minAmount &&
+                        o.Amount <= maxAmount &&
+                        o.Date >= startDate &&
+                        o.Date <= endDate &&
+                        o.CategoryId == categoryId &&
+                        o.AccountId == accountId)
+                    .ToList();
+
+                return operations;
+            }
+        }
+
+        public static List<Operation> GetBankOperationsInRangeWithoutCategory(int minAmount, int maxAmount, DateTime startDate, DateTime endDate, int accountId)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var operations = db.Operations
+                    .Where(o =>
+                        o.Amount >= minAmount &&
+                        o.Amount <= maxAmount &&
+                        o.Date >= startDate &&
+                        o.Date <= endDate &&
+                        o.AccountId == accountId)
+                    .ToList();
+
+                return operations;
+            }
+        }
+
+        public static List<Operation> GetBankOperationsInRangeWithoutAccount(int minAmount, int maxAmount, DateTime startDate, DateTime endDate, int categoryId)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var operations = db.Operations
+                    .Where(o =>
+                        o.Amount >= minAmount &&
+                        o.Amount <= maxAmount &&
+                        o.Date >= startDate &&
+                        o.Date <= endDate &&
+                        o.CategoryId == categoryId)
+                    .ToList();
+
+                return operations;
+            }
+        }
+
+        public static List<Operation> GetBankOperationsInRangeWithoutCategoryAndAccount(int minAmount, int maxAmount, DateTime startDate, DateTime endDate)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var operations = db.Operations
+                    .Where(o =>
+                        o.Amount >= minAmount &&
+                        o.Amount <= maxAmount &&
+                        o.Date >= startDate &&
+                        o.Date < endDate)
+                    .ToList();
+
+                return operations;
+            }
+        }
     }
 }

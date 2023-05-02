@@ -59,8 +59,8 @@
         
         <DatePicker Margin="20" materialDesign:HintAssist.Hint="Конечная дата" SelectedDate="{Binding FilterEndDate}" Grid.Column="1" Grid.Row="3" />
 
-        <Button Content="Отфильтровать" Margin="20" Command="{Binding AddNewExpense}" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"
-                    CommandParameter="{Binding ElementName=AddNewExpenseWnd}"
+        <Button Content="Отфильтровать" Margin="20" Command="{Binding FilterOperations}" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"
+                    CommandParameter="{Binding ElementName=FilterWnd}"
                     VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

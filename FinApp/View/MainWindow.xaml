@@ -46,7 +46,7 @@
                         
                         <Button Content="Расход" Background="#E91218"  Grid.Row="1" Margin="20 0 0 0" Width="200" Command="{Binding OpenAddExpenseWindow}"/>
 
-                        <Button Content="Фильтр" Background="Gray" Grid.Row="1" Margin="50 0 0 0" Width="100" Command="{Binding OpenFilterWindow}"/>
+                        <Button Content="Фильтр" Background="LightGray" Grid.Row="1" Margin="50 0 0 0" Width="100" Command="{Binding OpenFilterWindow}"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

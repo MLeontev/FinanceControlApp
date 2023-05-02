@@ -281,8 +281,8 @@ namespace FinApp.ViewModel
         #region Свойства фильтров
         public static int MinSum { get; set; }
         public static int MaxSum { get; set; }
-        public static string FilterCategory { get; set; }
-        public static string FilterAccount { get; set; }
+        public static Category FilterCategory { get; set; }
+        public static Account FilterAccount { get; set; }
         public static DateTime FilterStartDate { get; set; }
         public static DateTime FilterEndDate { get; set; }
         #endregion
@@ -296,6 +296,77 @@ namespace FinApp.ViewModel
         public static Category SelectedCategory { get; set; }
 
         public static Account SelectedAccount { get; set; }
+
+        //обработка фильтрами
+        private RelayCommand filterOperations;
+        public RelayCommand FilterOperations
+        {
+            get
+            {
+                return filterOperations ?? new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window;
+                    string resultStr = "";
+                    if (MinSum > MaxSum)
+                    {
+                        ShowMessage("Минимальная сумма не может быть больше максимальной");
+                    }
+                    else if (FilterStartDate > FilterEndDate)
+                    {
+                        ShowMessage("Начальная дата не может быть больше конечной");
+                    }
+                    else if (MinSum < 0 || MaxSum < 0)
+                    {
+                        ShowMessage("Сумма не может быть меньше нуля");
+                    }
+                    else if (MaxSum.ToString() == null || MaxSum.ToString().Length == 0 || MaxSum.ToString().Replace(" ", "").Length == 0)
+                    {
+                        MaxSum = Convert.ToInt32(double.MaxValue);
+                    }
+                    else if (FilterCategory == null && FilterAccount == null)
+                    {
+                        AllOperations = DataWorker.GetBankOperationsInRangeWithoutCategoryAndAccount(MinSum, MaxSum, FilterStartDate, FilterEndDate.AddDays(1));
+                        MainWindow.AllOperationsView.ItemsSource = null;
+                        MainWindow.AllOperationsView.Items.Clear();
+                        MainWindow.AllOperationsView.ItemsSource = AllOperations;
+                        MainWindow.AllOperationsView.Items.Refresh();
+                        SetNullToProperties();
+                        wnd.Close();
+                    }
+                    else if (FilterCategory == null && FilterAccount != null)
+                    {
+                        AllOperations = DataWorker.GetBankOperationsInRangeWithoutCategory(MinSum, MaxSum, FilterStartDate, FilterEndDate.AddDays(1), FilterAccount.Id);
+                        MainWindow.AllOperationsView.ItemsSource = null;
+                        MainWindow.AllOperationsView.Items.Clear();
+                        MainWindow.AllOperationsView.ItemsSource = AllOperations;
+                        MainWindow.AllOperationsView.Items.Refresh();
+                        SetNullToProperties();
+                        wnd.Close();
+                    }
+                    else if (FilterCategory != null && FilterAccount == null)
+                    {
+                        AllOperations = DataWorker.GetBankOperationsInRangeWithoutAccount(MinSum, MaxSum, FilterStartDate, FilterEndDate.AddDays(1), FilterCategory.Id);
+                        MainWindow.AllOperationsView.ItemsSource = null;
+                        MainWindow.AllOperationsView.Items.Clear();
+                        MainWindow.AllOperationsView.ItemsSource = AllOperations;
+                        MainWindow.AllOperationsView.Items.Refresh();
+                        SetNullToProperties();
+                        wnd.Close();
+                    }
+                    else
+                    {
+                        AllOperations = DataWorker.GetBankOperationsInRange(MinSum, MaxSum, FilterStartDate, FilterEndDate.AddDays(1), FilterCategory.Id, FilterAccount.Id);
+                        MainWindow.AllOperationsView.ItemsSource = null;
+                        MainWindow.AllOperationsView.Items.Clear();
+                        MainWindow.AllOperationsView.ItemsSource = AllOperations;
+                        MainWindow.AllOperationsView.Items.Refresh();
+                        SetNullToProperties();
+                        wnd.Close();
+                    }                   
+                }
+                );
+            }
+        }
 
         #region Редактирование и удаление элементов
         //удаление элементов
