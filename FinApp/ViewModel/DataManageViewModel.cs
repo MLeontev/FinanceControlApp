@@ -283,8 +283,8 @@ namespace FinApp.ViewModel
         public static string MaxSum { get; set; }
         public static Category FilterCategory { get; set; }
         public static Account FilterAccount { get; set; }
-        public static DateTime FilterStartDate { get; set; }
-        public static DateTime FilterEndDate { get; set; }
+        public static DateTime FilterStartDate { get; set; } = DateTime.Now;
+        public static DateTime FilterEndDate { get; set; } = DateTime.Now;
         #endregion
 
 
@@ -713,6 +713,11 @@ namespace FinApp.ViewModel
             ExpenseCategory = null;
             ExpenseAccount = null;
             ExpenseDate = DateTime.Now;
+
+            MinSum = "0";
+            MaxSum = "0";
+            //FilterStartDate = DateTime.Now;
+            //FilterEndDate = DateTime.Now;
         }
 
         private void UpdateAll()

@@ -310,6 +310,8 @@ namespace FinApp.Model.Data
                         o.Date <= endDate &&
                         o.CategoryId == categoryId &&
                         o.AccountId == accountId)
+                    .Include(o => o.Category)
+                    .Include(o => o.Account)
                     .ToList();
 
                 return operations;
@@ -327,6 +329,8 @@ namespace FinApp.Model.Data
                         o.Date >= startDate &&
                         o.Date <= endDate &&
                         o.AccountId == accountId)
+                    .Include(o => o.Category)
+                    .Include(o => o.Account)
                     .ToList();
 
                 return operations;
@@ -344,6 +348,8 @@ namespace FinApp.Model.Data
                         o.Date >= startDate &&
                         o.Date <= endDate &&
                         o.CategoryId == categoryId)
+                    .Include(o => o.Category)
+                    .Include(o => o.Account)
                     .ToList();
 
                 return operations;
@@ -360,6 +366,8 @@ namespace FinApp.Model.Data
                         o.Amount <= maxAmount &&
                         o.Date >= startDate &&
                         o.Date < endDate)
+                    .Include(o => o.Category)
+                    .Include(o => o.Account)
                     .ToList();
 
                 return operations;
