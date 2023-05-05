@@ -124,11 +124,7 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Name="SettingsTab">
-                <TabItem.Header>
-                    <TextBlock Text="Настройки"/>
-                </TabItem.Header>
-            </TabItem>
+            
         </TabControl>
 
     </Grid>

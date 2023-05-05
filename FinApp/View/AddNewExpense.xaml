@@ -23,6 +23,8 @@
                       SelectedItem="{Binding ExpenseCategory}"
                       DisplayMemberPath="Name"/>
 
+            <Button Content="Новая категория" Margin="20 5 0 0" Width="120" Command="{Binding OpenAddCategoryWindow}" Height="20" FontSize="10" HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"/>
 
             <ComboBox x:Name="ExpenseAccount"
                       materialDesign:HintAssist.Hint="Выберите счет"
@@ -31,6 +33,9 @@
                       Margin="20 0"
                       SelectedItem="{Binding ExpenseAccount}"
                       DisplayMemberPath="Name"/>
+
+            <Button Content="Новый счет" Margin="20 5 0 0" Width="120" Command="{Binding OpenAddAccountWindow}" Height="20" FontSize="10" HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"/>
 
             <DatePicker Margin="20" materialDesign:HintAssist.Hint="Текущая дата" SelectedDate="{Binding ExpenseDate}" />
 
