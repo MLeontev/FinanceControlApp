@@ -279,8 +279,8 @@ namespace FinApp.ViewModel
         public static DateTime ExpenseDate { get; set; } = DateTime.Now;
 
         #region Свойства фильтров
-        public static int MinSum { get; set; }
-        public static int MaxSum { get; set; }
+        public static string MinSum { get; set; }
+        public static string MaxSum { get; set; }
         public static Category FilterCategory { get; set; }
         public static Account FilterAccount { get; set; }
         public static DateTime FilterStartDate { get; set; }
@@ -305,9 +305,27 @@ namespace FinApp.ViewModel
             {
                 return filterOperations ?? new RelayCommand(obj =>
                 {
+                    int minSum, maxSum;
+
+                    bool isMinSumCorrect = Int32.TryParse(Convert.ToString(MinSum), out minSum);
+                    bool isMaxSumCorrect = Int32.TryParse(Convert.ToString(MaxSum), out maxSum);
+
+                    if (MaxSum.ToString() == null || MaxSum.ToString().Length == 0 || MaxSum.ToString().Replace(" ", "").Length == 0)
+                    {
+                        isMaxSumCorrect = true;
+                    }
+                    if (MinSum.ToString() == null || MinSum.ToString().Length == 0 || MinSum.ToString().Replace(" ", "").Length == 0)
+                    {
+                        isMinSumCorrect = true;
+                    }
+
                     Window wnd = obj as Window;
                     string resultStr = "";
-                    if (MinSum > MaxSum)
+                    if (!isMinSumCorrect || !isMaxSumCorrect)
+                    {
+                        ShowMessage("Некорректный ввод суммы");
+                    }
+                    else if (minSum > maxSum)
                     {
                         ShowMessage("Минимальная сумма не может быть больше максимальной");
                     }
@@ -315,17 +333,27 @@ namespace FinApp.ViewModel
                     {
                         ShowMessage("Начальная дата не может быть больше конечной");
                     }
-                    else if (MinSum < 0 || MaxSum < 0)
+                    else if (minSum < 0 || maxSum < 0)
                     {
                         ShowMessage("Сумма не может быть меньше нуля");
                     }
+                    else if ((MaxSum.ToString() == null || MaxSum.ToString().Length == 0 || MaxSum.ToString().Replace(" ", "").Length == 0) 
+                            && (MinSum.ToString() == null || MinSum.ToString().Length == 0 || MinSum.ToString().Replace(" ", "").Length == 0))
+                    {
+                        maxSum = Convert.ToInt32(double.MaxValue);
+                        minSum = 0;
+                    }
                     else if (MaxSum.ToString() == null || MaxSum.ToString().Length == 0 || MaxSum.ToString().Replace(" ", "").Length == 0)
                     {
-                        MaxSum = Convert.ToInt32(double.MaxValue);
+                        maxSum = Convert.ToInt32(double.MaxValue);
+                    }
+                    else if (MinSum.ToString() == null || MinSum.ToString().Length == 0 || MinSum.ToString().Replace(" ", "").Length == 0)
+                    {
+                        minSum = 0;
                     }
                     else if (FilterCategory == null && FilterAccount == null)
                     {
-                        AllOperations = DataWorker.GetBankOperationsInRangeWithoutCategoryAndAccount(MinSum, MaxSum, FilterStartDate, FilterEndDate.AddDays(1));
+                        AllOperations = DataWorker.GetBankOperationsInRangeWithoutCategoryAndAccount(minSum, maxSum, FilterStartDate, FilterEndDate.AddDays(1));
                         MainWindow.AllOperationsView.ItemsSource = null;
                         MainWindow.AllOperationsView.Items.Clear();
                         MainWindow.AllOperationsView.ItemsSource = AllOperations;
@@ -335,7 +363,7 @@ namespace FinApp.ViewModel
                     }
                     else if (FilterCategory == null && FilterAccount != null)
                     {
-                        AllOperations = DataWorker.GetBankOperationsInRangeWithoutCategory(MinSum, MaxSum, FilterStartDate, FilterEndDate.AddDays(1), FilterAccount.Id);
+                        AllOperations = DataWorker.GetBankOperationsInRangeWithoutCategory(minSum, maxSum, FilterStartDate, FilterEndDate.AddDays(1), FilterAccount.Id);
                         MainWindow.AllOperationsView.ItemsSource = null;
                         MainWindow.AllOperationsView.Items.Clear();
                         MainWindow.AllOperationsView.ItemsSource = AllOperations;
@@ -345,7 +373,7 @@ namespace FinApp.ViewModel
                     }
                     else if (FilterCategory != null && FilterAccount == null)
                     {
-                        AllOperations = DataWorker.GetBankOperationsInRangeWithoutAccount(MinSum, MaxSum, FilterStartDate, FilterEndDate.AddDays(1), FilterCategory.Id);
+                        AllOperations = DataWorker.GetBankOperationsInRangeWithoutAccount(minSum, maxSum, FilterStartDate, FilterEndDate.AddDays(1), FilterCategory.Id);
                         MainWindow.AllOperationsView.ItemsSource = null;
                         MainWindow.AllOperationsView.Items.Clear();
                         MainWindow.AllOperationsView.ItemsSource = AllOperations;
@@ -355,7 +383,7 @@ namespace FinApp.ViewModel
                     }
                     else
                     {
-                        AllOperations = DataWorker.GetBankOperationsInRange(MinSum, MaxSum, FilterStartDate, FilterEndDate.AddDays(1), FilterCategory.Id, FilterAccount.Id);
+                        AllOperations = DataWorker.GetBankOperationsInRange(minSum, maxSum, FilterStartDate, FilterEndDate.AddDays(1), FilterCategory.Id, FilterAccount.Id);
                         MainWindow.AllOperationsView.ItemsSource = null;
                         MainWindow.AllOperationsView.Items.Clear();
                         MainWindow.AllOperationsView.ItemsSource = AllOperations;
@@ -588,12 +616,12 @@ namespace FinApp.ViewModel
             }
         }
 
-        private RelayCommand addNewIncome;
-        public RelayCommand AddNewIncome
+        private RelayCommand addNewIncomeCommand;
+        public RelayCommand AddNewIncomeCommand
         {
             get
             {
-                return addNewIncome ?? new RelayCommand(obj =>
+                return addNewIncomeCommand ?? new RelayCommand(obj =>
                 {
                     Window wnd = obj as Window;
                     string resultStr = "";
@@ -628,12 +656,12 @@ namespace FinApp.ViewModel
             }
         }
 
-        private RelayCommand addNewExpense;
-        public RelayCommand AddNewExpense
+        private RelayCommand addNewExpenseCommand;
+        public RelayCommand AddNewExpenseCommand
         {
             get
             {
-                return addNewExpense ?? new RelayCommand(obj =>
+                return addNewExpenseCommand ?? new RelayCommand(obj =>
                 {
                     Window wnd = obj as Window;
                     string resultStr = "";
@@ -694,6 +722,17 @@ namespace FinApp.ViewModel
             UpdateAllOperationsView();
             MainWindow.UpdateExpenseChart();
             MainWindow.UpdateIncomeChart();
+
+            if (AddNewExpense.ExpenseCategories != null)
+            {
+                UpdateExpenseCategories();
+                UpdateExpenseAccounts();
+            }
+            else if (AddNewIncome.IncomeCategories != null)
+            {
+                UpdateIncomeCategories();
+                UpdateIncomeAccounts();
+            }
         }
 
         private void UpdateAllAccountsView()
@@ -721,6 +760,38 @@ namespace FinApp.ViewModel
             MainWindow.AllOperationsView.Items.Clear();
             MainWindow.AllOperationsView.ItemsSource = AllOperations;
             MainWindow.AllOperationsView.Items.Refresh();
+        }
+
+        private void UpdateExpenseCategories()
+        {
+            AddNewExpense.ExpenseCategories.ItemsSource= null;
+            AddNewExpense.ExpenseCategories.Items.Clear();
+            AddNewExpense.ExpenseCategories.ItemsSource = AllCategories;
+            AddNewExpense.ExpenseCategories.Items.Refresh();
+        }
+
+        private void UpdateExpenseAccounts()
+        {
+            AddNewExpense.ExpenseAccounts.ItemsSource = null;
+            AddNewExpense.ExpenseAccounts.Items.Clear();
+            AddNewExpense.ExpenseAccounts.ItemsSource = AllAccounts;
+            AddNewExpense.ExpenseAccounts.Items.Refresh();
+        }
+
+        private void UpdateIncomeCategories()
+        {
+            AddNewIncome.IncomeCategories.ItemsSource = null;
+            AddNewIncome.IncomeCategories.Items.Clear();
+            AddNewIncome.IncomeCategories.ItemsSource = AllCategories;
+            AddNewIncome.IncomeCategories.Items.Refresh();
+        }
+
+        private void UpdateIncomeAccounts()
+        {
+            AddNewIncome.IncomeAccounts.ItemsSource = null;
+            AddNewIncome.IncomeAccounts.Items.Clear();
+            AddNewIncome.IncomeAccounts.ItemsSource = AllAccounts;
+            AddNewIncome.IncomeAccounts.Items.Refresh();
         }
         #endregion
 

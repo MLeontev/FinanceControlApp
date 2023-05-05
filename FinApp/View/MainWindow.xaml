@@ -6,7 +6,7 @@
         xmlns:ScottPlot="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
         xmlns:local="clr-namespace:FinApp.View"
         mc:Ignorable="d"
-        Title="Мои финансы" Height="800" Width="950">
+        Title="Мои финансы" Height="800" Width="1050">
     <Grid>
         <TabControl TabStripPlacement="Right" SelectedItem="{Binding SelectedTabItem}">
             <TabControl.ContextMenu>
@@ -42,11 +42,11 @@
                         </ListView.View>
                     </ListView>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                        <Button Content="Доход" Grid.Row="1" Margin="20 0 0 0" Width="200" Command="{Binding OpenAddIncomeWindow}"/>
-                        
-                        <Button Content="Расход" Background="#E91218"  Grid.Row="1" Margin="20 0 0 0" Width="200" Command="{Binding OpenAddExpenseWindow}"/>
+                        <Button Content="Доход" Grid.Row="1" Margin="20 0 0 0" Width="170" Command="{Binding OpenAddIncomeWindow}"/>
 
-                        <Button Content="Фильтр" Background="LightGray" Grid.Row="1" Margin="50 0 0 0" Width="100" Command="{Binding OpenFilterWindow}"/>
+                        <Button Content="Расход" Background="#E91218"  Grid.Row="1" Margin="20 0 0 0" Width="170" Command="{Binding OpenAddExpenseWindow}" />
+
+                        <Button Content="Фильтр" Background="LightGray" FontSize="10" Grid.Row="1" Margin="50 0 0 0" Width="100" Command="{Binding OpenFilterWindow}"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

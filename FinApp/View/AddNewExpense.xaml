@@ -39,7 +39,7 @@
 
             <DatePicker Margin="20" materialDesign:HintAssist.Hint="Текущая дата" SelectedDate="{Binding ExpenseDate}" />
 
-            <Button Content="Добавить" Margin="20" Command="{Binding AddNewExpense}"
+            <Button Content="Добавить" Margin="20" Command="{Binding AddNewExpenseCommand}"
                     CommandParameter="{Binding ElementName=AddNewExpenseWnd}"/>
 
         </StackPanel>

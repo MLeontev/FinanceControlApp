@@ -20,10 +20,16 @@ namespace FinApp.View
     /// </summary>
     public partial class AddNewExpense : Window
     {
+        public static ComboBox ExpenseCategories;
+        public static ComboBox ExpenseAccounts;
+
         public AddNewExpense()
         {
             InitializeComponent();
             DataContext = new DataManageViewModel();
+
+            ExpenseCategories = ExpenseCategory;
+            ExpenseAccounts = ExpenseAccount;
         }
     }
 }

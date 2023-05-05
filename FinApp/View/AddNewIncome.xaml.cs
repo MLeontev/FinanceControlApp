@@ -20,10 +20,16 @@ namespace FinApp.View
     /// </summary>
     public partial class AddNewIncome : Window
     {
+        public static ComboBox IncomeCategories;
+        public static ComboBox IncomeAccounts;
+
         public AddNewIncome()
         {
             InitializeComponent();
             DataContext = new DataManageViewModel();
+
+            IncomeCategories = IncomeCategory;
+            IncomeAccounts = IncomeAccount;
         }
     }
 }

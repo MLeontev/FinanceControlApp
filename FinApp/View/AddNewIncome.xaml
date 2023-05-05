@@ -23,6 +23,9 @@
                       SelectedItem="{Binding IncomeCategory}"
                       DisplayMemberPath="Name"/>
 
+            <Button Content="Новая категория" Margin="20 5 0 0" Width="120" Command="{Binding OpenAddCategoryWindow}" Height="20" FontSize="10" HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"/>
+
 
             <ComboBox x:Name="IncomeAccount"
                       materialDesign:HintAssist.Hint="Выберите счет"
@@ -32,9 +35,12 @@
                       SelectedItem="{Binding IncomeAccount}"
                       DisplayMemberPath="Name"/>
 
+            <Button Content="Новый счет" Margin="20 5 0 0" Width="120" Command="{Binding OpenAddAccountWindow}" Height="20" FontSize="10" HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"/>
+
             <DatePicker x:Name="IncomeDate" Margin="20" materialDesign:HintAssist.Hint="Текущая дата" SelectedDate="{Binding IncomeDate}"/>
 
-            <Button Content="Добавить" Margin="20" Command="{Binding AddNewIncome}"
+            <Button Content="Добавить" Margin="20" Command="{Binding AddNewIncomeCommand}"
                     CommandParameter="{Binding ElementName=AddNewIncomeWnd}"/>
             
         </StackPanel>
