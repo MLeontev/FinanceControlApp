@@ -61,7 +61,6 @@ namespace FinApp.ViewModel
             }
         }
 
-
         #region Методы открытия окон
         private void OpenAddAccountWindowMethod()
         {
@@ -280,7 +279,7 @@ namespace FinApp.ViewModel
 
         #region Свойства фильтров
         public static string MinSum { get; set; } = "0";
-        public static string MaxSum { get; set; } = "100000000";
+        public static string MaxSum { get; set; } = Convert.ToString(DataWorker.GetMaxAmount());
         public static Category FilterCategory { get; set; }
         public static Account FilterAccount { get; set; }
         public static DateTime FilterStartDate { get; set; } = DateTime.Now;
@@ -707,7 +706,9 @@ namespace FinApp.ViewModel
             ExpenseDate = DateTime.Now;
 
             MinSum = "0";
-            MaxSum = "100000000";
+            MaxSum = Convert.ToString(DataWorker.GetMaxAmount());
+            FilterCategory = null;
+            FilterAccount = null;
             FilterStartDate = DateTime.Now;
             FilterEndDate = DateTime.Now;
         }

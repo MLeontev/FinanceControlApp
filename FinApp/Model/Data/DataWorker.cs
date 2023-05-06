@@ -373,5 +373,17 @@ namespace FinApp.Model.Data
                 return operations;
             }
         }
+
+        //получить максимальную сумму оперции
+        public static int GetMaxAmount()
+        {
+            List<Operation> operations = GetAllOperations();
+            int max = 0;
+            foreach (Operation operation in operations)
+            {
+                if (operation.Amount > max) max = operation.Amount;
+            }
+            return max;
+        }
     }
 }
