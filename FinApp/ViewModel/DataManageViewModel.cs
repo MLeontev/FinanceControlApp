@@ -279,8 +279,8 @@ namespace FinApp.ViewModel
         public static DateTime ExpenseDate { get; set; } = DateTime.Now;
 
         #region Свойства фильтров
-        public static string MinSum { get; set; }
-        public static string MaxSum { get; set; }
+        public static string MinSum { get; set; } = "0";
+        public static string MaxSum { get; set; } = "100000000";
         public static Category FilterCategory { get; set; }
         public static Account FilterAccount { get; set; }
         public static DateTime FilterStartDate { get; set; } = DateTime.Now;
@@ -310,15 +310,6 @@ namespace FinApp.ViewModel
                     bool isMinSumCorrect = Int32.TryParse(Convert.ToString(MinSum), out minSum);
                     bool isMaxSumCorrect = Int32.TryParse(Convert.ToString(MaxSum), out maxSum);
 
-                    if (MaxSum.ToString() == null || MaxSum.ToString().Length == 0 || MaxSum.ToString().Replace(" ", "").Length == 0)
-                    {
-                        isMaxSumCorrect = true;
-                    }
-                    if (MinSum.ToString() == null || MinSum.ToString().Length == 0 || MinSum.ToString().Replace(" ", "").Length == 0)
-                    {
-                        isMinSumCorrect = true;
-                    }
-
                     Window wnd = obj as Window;
                     string resultStr = "";
                     if (!isMinSumCorrect || !isMaxSumCorrect)
@@ -336,20 +327,6 @@ namespace FinApp.ViewModel
                     else if (minSum < 0 || maxSum < 0)
                     {
                         ShowMessage("Сумма не может быть меньше нуля");
-                    }
-                    else if ((MaxSum.ToString() == null || MaxSum.ToString().Length == 0 || MaxSum.ToString().Replace(" ", "").Length == 0) 
-                            && (MinSum.ToString() == null || MinSum.ToString().Length == 0 || MinSum.ToString().Replace(" ", "").Length == 0))
-                    {
-                        maxSum = Convert.ToInt32(double.MaxValue);
-                        minSum = 0;
-                    }
-                    else if (MaxSum.ToString() == null || MaxSum.ToString().Length == 0 || MaxSum.ToString().Replace(" ", "").Length == 0)
-                    {
-                        maxSum = Convert.ToInt32(double.MaxValue);
-                    }
-                    else if (MinSum.ToString() == null || MinSum.ToString().Length == 0 || MinSum.ToString().Replace(" ", "").Length == 0)
-                    {
-                        minSum = 0;
                     }
                     else if (FilterCategory == null && FilterAccount == null)
                     {
@@ -395,6 +372,21 @@ namespace FinApp.ViewModel
                 );
             }
         }
+
+        private RelayCommand removeFilters;
+        public RelayCommand RemoveFilters
+        {
+            get
+            {
+                return removeFilters ?? new RelayCommand(obj =>
+                {
+                    UpdateAllOperationsView();
+                }
+                );
+            }
+        }
+
+
 
         #region Редактирование и удаление элементов
         //удаление элементов
@@ -715,9 +707,9 @@ namespace FinApp.ViewModel
             ExpenseDate = DateTime.Now;
 
             MinSum = "0";
-            MaxSum = "0";
-            //FilterStartDate = DateTime.Now;
-            //FilterEndDate = DateTime.Now;
+            MaxSum = "100000000";
+            FilterStartDate = DateTime.Now;
+            FilterEndDate = DateTime.Now;
         }
 
         private void UpdateAll()
