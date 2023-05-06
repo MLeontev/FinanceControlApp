@@ -733,7 +733,7 @@ namespace FinApp.ViewModel
                 UpdateExpenseCategories();
                 UpdateExpenseAccounts();
             }
-            else if (AddNewIncome.IncomeCategories != null)
+            if (AddNewIncome.IncomeCategories != null)
             {
                 UpdateIncomeCategories();
                 UpdateIncomeAccounts();
