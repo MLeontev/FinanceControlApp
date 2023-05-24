@@ -853,25 +853,33 @@ namespace FinApp.ViewModel
         {
             get
             {
-                if (SelectedTabItem.Name == "ListTab")
+                if (SelectedTabItem != null)
                 {
-                    return _showHelpCommand ??
-                   (_showHelpCommand = new RelayCommand(p => DisplayHelpOperations(), p => true));
-                }
-                else if (SelectedTabItem.Name == "CategoriesTab")
-                {
-                    return _showHelpCommand ??
-                   (_showHelpCommand = new RelayCommand(p => DisplayHelpCategories(), p => true));
-                }
-                else if (SelectedTabItem.Name == "AccountsTab")
-                {
-                    return _showHelpCommand ??
-                   (_showHelpCommand = new RelayCommand(p => DisplayHelpAccounts(), p => true));
+                    if (SelectedTabItem.Name == "ListTab")
+                    {
+                        return _showHelpCommand ??
+                       (_showHelpCommand = new RelayCommand(p => DisplayHelpOperations(), p => true));
+                    }
+                    else if (SelectedTabItem.Name == "CategoriesTab")
+                    {
+                        return _showHelpCommand ??
+                       (_showHelpCommand = new RelayCommand(p => DisplayHelpCategories(), p => true));
+                    }
+                    else if (SelectedTabItem.Name == "AccountsTab")
+                    {
+                        return _showHelpCommand ??
+                       (_showHelpCommand = new RelayCommand(p => DisplayHelpAccounts(), p => true));
+                    }
+                    else
+                    {
+                        return _showHelpCommand ??
+                       (_showHelpCommand = new RelayCommand(p => DisplayHelp(), p => true));
+                    }
                 }
                 else
                 {
                     return _showHelpCommand ??
-                   (_showHelpCommand = new RelayCommand(p => DisplayHelp(), p => true));
+                       (_showHelpCommand = new RelayCommand(p => DisplayHelp(), p => true));
                 }
             }
         }
