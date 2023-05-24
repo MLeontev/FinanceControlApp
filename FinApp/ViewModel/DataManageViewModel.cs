@@ -14,6 +14,8 @@ using System.Windows.Media;
 using ScottPlot.Drawing.Colormaps;
 using System.Reflection.Emit;
 using System.Windows.Input;
+using System.Windows.Forms;
+
 
 namespace FinApp.ViewModel
 {
@@ -127,7 +129,7 @@ namespace FinApp.ViewModel
 
         private void SetCenterPositionAndOpen(Window window)
         {
-            window.Owner = Application.Current.MainWindow;
+            window.Owner = System.Windows.Application.Current.MainWindow;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
         }
@@ -244,13 +246,13 @@ namespace FinApp.ViewModel
 
         private void SetRedBlockControl(Window wnd, string blockname)
         {
-            Control block = wnd.FindName(blockname) as Control;
+            System.Windows.Controls.Control block = wnd.FindName(blockname) as System.Windows.Controls.Control;
             block.BorderBrush = Brushes.Red;
         }
 
         private void SetDefaultBlockControl(Window wnd, string blockname)
         {
-            Control block = wnd.FindName(blockname) as Control;
+            System.Windows.Controls.Control block = wnd.FindName(blockname) as System.Windows.Controls.Control;
             block.BorderBrush = Brushes.Gray;
         }
 
@@ -808,36 +810,6 @@ namespace FinApp.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        public void DisplayHelpOperations()
-        {
-            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
-
-            var proc = new System.Diagnostics.Process();
-            proc.StartInfo.FileName = helpFilePath;
-            proc.StartInfo.UseShellExecute = true;
-            proc.Start();
-        }
-
-        public void DisplayHelpCategories()
-        {
-            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
-
-            var proc = new System.Diagnostics.Process();
-            proc.StartInfo.FileName = helpFilePath;
-            proc.StartInfo.UseShellExecute = true;
-            proc.Start();
-        }
-
-        public void DisplayHelpAccounts()
-        {
-            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
-
-            var proc = new System.Diagnostics.Process();
-            proc.StartInfo.FileName = helpFilePath;
-            proc.StartInfo.UseShellExecute = true;
-            proc.Start();
-        }
-
         public void DisplayHelp()
         {
             string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
@@ -853,34 +825,8 @@ namespace FinApp.ViewModel
         {
             get
             {
-                if (SelectedTabItem != null)
-                {
-                    if (SelectedTabItem.Name == "ListTab")
-                    {
-                        return _showHelpCommand ??
-                       (_showHelpCommand = new RelayCommand(p => DisplayHelpOperations(), p => true));
-                    }
-                    else if (SelectedTabItem.Name == "CategoriesTab")
-                    {
-                        return _showHelpCommand ??
-                       (_showHelpCommand = new RelayCommand(p => DisplayHelpCategories(), p => true));
-                    }
-                    else if (SelectedTabItem.Name == "AccountsTab")
-                    {
-                        return _showHelpCommand ??
-                       (_showHelpCommand = new RelayCommand(p => DisplayHelpAccounts(), p => true));
-                    }
-                    else
-                    {
-                        return _showHelpCommand ??
+                return _showHelpCommand ??
                        (_showHelpCommand = new RelayCommand(p => DisplayHelp(), p => true));
-                    }
-                }
-                else
-                {
-                    return _showHelpCommand ??
-                       (_showHelpCommand = new RelayCommand(p => DisplayHelp(), p => true));
-                }
             }
         }
     }
