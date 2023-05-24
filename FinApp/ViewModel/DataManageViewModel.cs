@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using ScottPlot.Drawing.Colormaps;
 using System.Reflection.Emit;
+using System.Windows.Input;
 
 namespace FinApp.ViewModel
 {
@@ -805,6 +806,74 @@ namespace FinApp.ViewModel
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public void DisplayHelpOperations()
+        {
+            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
+
+            var proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = helpFilePath;
+            proc.StartInfo.UseShellExecute = true;
+            proc.Start();
+        }
+
+        public void DisplayHelpCategories()
+        {
+            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
+
+            var proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = helpFilePath;
+            proc.StartInfo.UseShellExecute = true;
+            proc.Start();
+        }
+
+        public void DisplayHelpAccounts()
+        {
+            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
+
+            var proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = helpFilePath;
+            proc.StartInfo.UseShellExecute = true;
+            proc.Start();
+        }
+
+        public void DisplayHelp()
+        {
+            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
+
+            var proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = helpFilePath;
+            proc.StartInfo.UseShellExecute = true;
+            proc.Start();
+        }
+
+        private ICommand _showHelpCommand;
+        public ICommand ShowHelpCommand
+        {
+            get
+            {
+                if (SelectedTabItem.Name == "ListTab")
+                {
+                    return _showHelpCommand ??
+                   (_showHelpCommand = new RelayCommand(p => DisplayHelpOperations(), p => true));
+                }
+                else if (SelectedTabItem.Name == "CategoriesTab")
+                {
+                    return _showHelpCommand ??
+                   (_showHelpCommand = new RelayCommand(p => DisplayHelpCategories(), p => true));
+                }
+                else if (SelectedTabItem.Name == "AccountsTab")
+                {
+                    return _showHelpCommand ??
+                   (_showHelpCommand = new RelayCommand(p => DisplayHelpAccounts(), p => true));
+                }
+                else
+                {
+                    return _showHelpCommand ??
+                   (_showHelpCommand = new RelayCommand(p => DisplayHelp(), p => true));
+                }
+            }
         }
     }
 }
