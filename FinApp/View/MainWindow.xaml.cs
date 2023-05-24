@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +8,8 @@ using FinApp.ViewModel;
 using MaterialDesignColors.Recommended;
 using ScottPlot;
 using ScottPlot.Plottable;
+using ScottPlot.WPF;
+using Microsoft.Win32;
 
 namespace FinApp.View
 {
@@ -141,6 +142,16 @@ namespace FinApp.View
             }
 
             ExpenseChart.Refresh();
+        }
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
+
+            var proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = helpFilePath;
+            proc.StartInfo.UseShellExecute = true;
+            proc.Start();
         }
     }
 }
