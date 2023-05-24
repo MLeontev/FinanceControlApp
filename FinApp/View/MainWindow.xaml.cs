@@ -10,6 +10,7 @@ using ScottPlot;
 using ScottPlot.Plottable;
 using ScottPlot.WPF;
 using Microsoft.Win32;
+using System.IO;
 
 namespace FinApp.View
 {
@@ -146,12 +147,12 @@ namespace FinApp.View
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
+            string commandText = @"C:\Users\MaxL\source\repos\FinControl\FinApp\Help\user_manual.chm";
 
-            var proc = new System.Diagnostics.Process();
-            proc.StartInfo.FileName = helpFilePath;
-            proc.StartInfo.UseShellExecute = true;
-            proc.Start();
+	        var proc = new System.Diagnostics.Process();
+ 	        proc.StartInfo.FileName = commandText;
+ 	        proc.StartInfo.UseShellExecute = true;
+ 	        proc.Start ();
         }
     }
 }
