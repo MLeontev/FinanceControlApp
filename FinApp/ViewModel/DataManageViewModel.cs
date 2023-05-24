@@ -848,32 +848,32 @@ namespace FinApp.ViewModel
             proc.Start();
         }
 
-        //private ICommand _showHelpCommand;
-        //public ICommand ShowHelpCommand
-        //{
-        //    get
-        //    {
-        //        if (SelectedTabItem.Name == "ListTab")
-        //        {
-        //            return _showHelpCommand ??
-        //           (_showHelpCommand = new RelayCommand(p => DisplayHelpOperations(), p => true));
-        //        }
-        //        else if (SelectedTabItem.Name == "CategoriesTab")
-        //        {
-        //            return _showHelpCommand ??
-        //           (_showHelpCommand = new RelayCommand(p => DisplayHelpCategories(), p => true));
-        //        }
-        //        else if (SelectedTabItem.Name == "AccountsTab")
-        //        {
-        //            return _showHelpCommand ??
-        //           (_showHelpCommand = new RelayCommand(p => DisplayHelpAccounts(), p => true));
-        //        }
-        //        else
-        //        {
-        //            return _showHelpCommand ??
-        //           (_showHelpCommand = new RelayCommand(p => DisplayHelp(), p => true));
-        //        }
-        //    }
-        //}
+        private ICommand _showHelpCommand;
+        public ICommand ShowHelpCommand
+        {
+            get
+            {
+                if (SelectedTabItem.Name == "ListTab")
+                {
+                    return _showHelpCommand ??
+                   (_showHelpCommand = new RelayCommand(p => DisplayHelpOperations(), p => true));
+                }
+                else if (SelectedTabItem.Name == "CategoriesTab")
+                {
+                    return _showHelpCommand ??
+                   (_showHelpCommand = new RelayCommand(p => DisplayHelpCategories(), p => true));
+                }
+                else if (SelectedTabItem.Name == "AccountsTab")
+                {
+                    return _showHelpCommand ??
+                   (_showHelpCommand = new RelayCommand(p => DisplayHelpAccounts(), p => true));
+                }
+                else
+                {
+                    return _showHelpCommand ??
+                   (_showHelpCommand = new RelayCommand(p => DisplayHelp(), p => true));
+                }
+            }
+        }
     }
 }
