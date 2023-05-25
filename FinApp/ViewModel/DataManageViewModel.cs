@@ -812,7 +812,26 @@ namespace FinApp.ViewModel
 
         public void DisplayHelp()
         {
-            Help.ShowHelp(null, "user_manual.chm");
+            if (SelectedTabItem == null)
+            {
+                Help.ShowHelp(null, "user_manual.chm", HelpNavigator.TopicId, "3");
+            }
+            else if (SelectedTabItem.Name == "ListTab")
+            {
+                Help.ShowHelp(null, "user_manual.chm", HelpNavigator.TopicId, "40");
+            }
+            else if (SelectedTabItem.Name == "CategoriesTab")
+            {
+                Help.ShowHelp(null, "user_manual.chm", HelpNavigator.TopicId, "32");
+            }
+            else if (SelectedTabItem.Name == "AccountsTab")
+            {
+                Help.ShowHelp(null, "user_manual.chm", HelpNavigator.TopicId, "33");
+            }
+            else
+            {
+                Help.ShowHelp(null, "user_manual.chm", HelpNavigator.TopicId, "3");
+            }
         }
 
         private ICommand _showHelpCommand;
