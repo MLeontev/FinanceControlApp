@@ -45,13 +45,13 @@
                         </ListView.View>
                     </ListView>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                        <Button Content="Доход" Grid.Row="1" Margin="20 0 0 0" Width="170" Command="{Binding OpenAddIncomeWindow}"/>
+                        <Button x:Name="AddIncomeButton" Content="Доход" Grid.Row="1" Margin="20 0 0 0" Width="170" Command="{Binding OpenAddIncomeWindow}"/>
 
-                        <Button Content="Расход" Background="#E91218"  Grid.Row="1" Margin="20 0 0 0" Width="170" Command="{Binding OpenAddExpenseWindow}" />
+                        <Button x:Name="AddExpenseButton" Content="Расход" Background="#E91218"  Grid.Row="1" Margin="20 0 0 0" Width="170" Command="{Binding OpenAddExpenseWindow}" />
 
-                        <Button Content="Фильтр" Background="LightGray" FontSize="15" Grid.Row="1" Margin="50 0 0 0" Width="100" Command="{Binding OpenFilterWindow}"/>
+                        <Button x:Name="FilterButton" Content="Фильтр" Background="LightGray" FontSize="15" Grid.Row="1" Margin="50 0 0 0" Width="100" Command="{Binding OpenFilterWindow}"/>
 
-                        <Button Content="Фильтр сброс" Background="LightGray" FontSize="10" Grid.Row="1" Margin="25 0 0 0" Width="100" Command="{Binding RemoveFilters}"/>
+                        <Button x:Name="ClearFilterButton" Content="Фильтр сброс" Background="LightGray" FontSize="10" Grid.Row="1" Margin="25 0 0 0" Width="100" Command="{Binding RemoveFilters}"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -136,7 +136,7 @@
                 </TabItem.Header>
                 <StackPanel>
                     <TextBlock Margin="0 20 0 0" Text="Для получения руководства нажмите на кнопку &quot;Помощь&quot;. Также вы можете нажать F1 на любой вкладке и получить справку." TextWrapping="Wrap" TextAlignment="Center" Style="{StaticResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Center" />
-                    <Button Content="Помощь" FontSize="20" Width="150" Height="40" Margin="0 15 0 0" Click="HelpButton_Click"/>
+                    <Button Content="Помощь" FontSize="20" Width="150" Height="40" Margin="0 15 0 0" Command="{Binding ShowHelpCommand}"/>
                 </StackPanel>
             </TabItem>
             

@@ -812,12 +812,7 @@ namespace FinApp.ViewModel
 
         public void DisplayHelp()
         {
-            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
-
-            var proc = new System.Diagnostics.Process();
-            proc.StartInfo.FileName = helpFilePath;
-            proc.StartInfo.UseShellExecute = true;
-            proc.Start();
+            Help.ShowHelp(null, "user_manual.chm");
         }
 
         private ICommand _showHelpCommand;

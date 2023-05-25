@@ -11,6 +11,8 @@ using ScottPlot.Plottable;
 using ScottPlot.WPF;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows.Forms;
+using ApplicationContext = FinApp.Model.Data.ApplicationContext;
 
 namespace FinApp.View
 {
@@ -20,9 +22,9 @@ namespace FinApp.View
     public partial class MainWindow : Window
     {
         ApplicationContext db = new ApplicationContext();
-        public static ListView AllAccountsView;
-        public static ListView AllCategoriesView;
-        public static ListView AllOperationsView;
+        public static System.Windows.Controls.ListView AllAccountsView;
+        public static System.Windows.Controls.ListView AllCategoriesView;
+        public static System.Windows.Controls.ListView AllOperationsView;
         public static WpfPlot IncomeChart;
         public static WpfPlot ExpenseChart;
         private static double[] values;
@@ -143,16 +145,6 @@ namespace FinApp.View
             }
 
             ExpenseChart.Refresh();
-        }
-
-        private void HelpButton_Click(object sender, RoutedEventArgs e)
-        {
-            string helpFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user_manual.chm");
-
-            var proc = new System.Diagnostics.Process();
-            proc.StartInfo.FileName = helpFilePath;
-            proc.StartInfo.UseShellExecute = true;
-            proc.Start();
         }
     }
 }
