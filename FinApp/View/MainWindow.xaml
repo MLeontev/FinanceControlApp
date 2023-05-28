@@ -121,6 +121,8 @@
                                                 DisplayMemberBinding="{Binding Name}" />
                                 <GridViewColumn Width="150" Header="Баланс"
                                                 DisplayMemberBinding="{Binding CurrentBalance}" />
+                                <GridViewColumn Width="150" Header="Тип счета"
+                                                DisplayMemberBinding="{Binding Type}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
