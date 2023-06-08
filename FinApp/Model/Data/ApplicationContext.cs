@@ -13,7 +13,6 @@ namespace FinApp.Model.Data
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Operation> Operations { get; set; } = null!;
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=FinApp.db");

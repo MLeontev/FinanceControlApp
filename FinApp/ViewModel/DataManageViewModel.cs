@@ -89,20 +89,6 @@ namespace FinApp.ViewModel
             SetCenterPositionAndOpen(newIncomeWindow);
         }
 
-        private void OpenAuthenticationWindowMethod(Window window)
-        {
-            AuthenticationWindow authWindow = new AuthenticationWindow();
-            SetCenterPositionAndOpen(authWindow);
-            window.Close();
-        }
-
-        private void OpenRegistrationWindowMethod(Window window)
-        {
-            RegistrationWindow regWindow = new RegistrationWindow();
-            SetCenterPositionAndOpen(regWindow);
-            window.Close();
-        }
-
         private void OpenEditAccountWindowMethod(Account account)
         {
             EditAccount editAccountWindow = new EditAccount(account);
@@ -563,7 +549,9 @@ namespace FinApp.ViewModel
                     {
                         SetDefaultBlockControl(wnd, "CategoryName");
                         resultStr = DataWorker.CreateCategory(CategoryName);
+
                         ShowMessage(resultStr);
+
                         UpdateAll();
                         SetNullToProperties();
                         wnd.Close();

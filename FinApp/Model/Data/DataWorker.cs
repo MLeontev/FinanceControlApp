@@ -10,26 +10,6 @@ namespace FinApp.Model.Data
 {
     public static class DataWorker
     {
-        //получить счет по id счета
-        public static Account GetAccountById(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                Account account = db.Accounts.FirstOrDefault(a => a.Id == id);
-                return account;
-            }
-        }
-
-        //получить категорию по id категории
-        public static Category GetCategoryById(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                Category category = db.Categories.FirstOrDefault(a => a.Id == id);
-                return category;
-            }
-        }
-
         //получить все категории
         public static List<Category> GetAllCategories()
         {
@@ -47,26 +27,6 @@ namespace FinApp.Model.Data
             {
                 List<Account> accounts = db.Accounts.ToList();
                 return accounts;
-            }
-        }
-
-        //получить все доходы
-        public static List<Operation> GetAllIncomes()
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<Operation> incomes = (from operation in GetAllOperations() where operation.IsIncome == 1 select operation).ToList();
-                return incomes;
-            }
-        }
-
-        //получить все расходы
-        public static List<Operation> GetAllExpenses()
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<Operation> expenses = (from operation in GetAllOperations() where operation.IsIncome == 0 select operation).ToList();
-                return expenses;
             }
         }
 
@@ -91,26 +51,6 @@ namespace FinApp.Model.Data
             {
                 List<Operation> operations = (from operation in GetAllOperations() where operation.AccountId == id select operation).ToList();
                 return operations;
-            }
-        }
-
-        //получить все доходы по счету
-        public static List<Operation> GetAllIncomesByAccountId(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<Operation> incomes = (from operation in GetAllOperationsByAccountId(id) where operation.IsIncome == 1 select operation).ToList();
-                return incomes;
-            }
-        }
-
-        //получить все расходы по счету
-        public static List<Operation> GetAllExpensesByAccountId(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<Operation> expenses = (from operation in GetAllOperationsByAccountId(id) where operation.IsIncome == 0 select operation).ToList();
-                return expenses;
             }
         }
 
