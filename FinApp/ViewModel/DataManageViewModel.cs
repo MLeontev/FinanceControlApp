@@ -23,13 +23,43 @@ namespace FinApp.ViewModel
     {
 
         //все счета пользователя
-        public List<Account> AllAccounts { get; set; }
+        private List<Account> allAccounts = DataWorker.GetAllAccounts();
+        public List<Account> AllAccounts
+        {
+            get { return allAccounts; }
+            set
+            {
+                allAccounts = value;
+            }
+        }
 
         //все операции пользователя
-        public List<Operation> AllOperations { get; set; }
+        private List<Operation> allOperations = DataWorker.GetAllOperations();
+        public List<Operation> AllOperations
+        {
+            get
+            {
+                return allOperations;
+            }
+            set
+            {
+                allOperations = value;
+            }
+        }
 
         //все категории пользователя
-        public List<Category> AllCategories { get; set; }
+        private List<Category> allCategories = DataWorker.GetAllCategories();
+        public List<Category> AllCategories
+        {
+            get
+            {
+                return allCategories;
+            }
+            set
+            {
+                allCategories = value;
+            }
+        }
 
 
         #region Методы открытия окон
@@ -557,7 +587,11 @@ namespace FinApp.ViewModel
                 {
                     Window wnd = obj as Window;
                     string resultStr = "";
-                    if (IncomeSum <= 0) 
+                    if (IncomeSum == 0)
+                    {
+                        ShowMessage("Введите сумму");
+                    }
+                    else if (IncomeSum < 0)
                     {
                         ShowMessage("Сумма не может быть отрицательной");
                     }
@@ -591,7 +625,11 @@ namespace FinApp.ViewModel
                 {
                     Window wnd = obj as Window;
                     string resultStr = "";
-                    if (ExpenseSum <= 0)
+                    if (ExpenseSum == 0)
+                    {
+                        ShowMessage("Введите сумму");
+                    }
+                    else if(ExpenseSum < 0)
                     {
                         ShowMessage("Сумма не может быть отрицательной");
                     }
