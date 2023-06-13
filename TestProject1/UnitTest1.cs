@@ -7,7 +7,7 @@ namespace TestProject
     [TestClass]
     public class UnitTest
     {
-        ApplicationContext db;
+        ApplicationContext? db;
 
         [TestInitialize]
         public void Init()
@@ -22,7 +22,19 @@ namespace TestProject
         public void CreateCategotyTest()
         {
             string result = DataWorker.CreateCategory("TestCategory");
+
             Assert.AreEqual(result, "Сделано");
+        }
+
+        [TestMethod]
+        public void CreateExistingCategotyTest()
+        {
+            DataWorker.CreateCategory("TestCategory");
+            string result = DataWorker.CreateCategory("TestCategory");
+
+            Assert.AreEqual(result, "Такая категория уже существует");
         }
     }
 }
+
+

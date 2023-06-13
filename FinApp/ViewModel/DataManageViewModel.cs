@@ -19,50 +19,18 @@ using System.Windows.Forms;
 
 namespace FinApp.ViewModel
 {
-    public class DataManageViewModel : INotifyPropertyChanged
+    public class DataManageViewModel
     {
 
         //все счета пользователя
-        private List<Account> allAccounts = DataWorker.GetAllAccounts();
-        public List<Account> AllAccounts
-        {
-            get { return allAccounts; }
-            set
-            {
-                allAccounts = value;
-                OnPropertyChanged("AllAccounts");
-            }
-        }
+        public List<Account> AllAccounts { get; set; }
 
         //все операции пользователя
-        private List<Operation> allOperations = DataWorker.GetAllOperations();
-        public List<Operation> AllOperations
-        {
-            get
-            {
-                return allOperations;
-            }
-            set
-            {
-                allOperations = value;
-                OnPropertyChanged("AllOperations");
-            }
-        }
+        public List<Operation> AllOperations { get; set; }
 
         //все категории пользователя
-        private List<Category> allCategories = DataWorker.GetAllCategories();
-        public List<Category> AllCategories
-        {
-            get
-            {
-                return allCategories;
-            }
-            set
-            {
-                allCategories = value;
-                OnPropertyChanged("AllCategories");
-            }
-        }
+        public List<Category> AllCategories { get; set; }
+
 
         #region Методы открытия окон
         private void OpenAddAccountWindowMethod()
@@ -230,18 +198,6 @@ namespace FinApp.ViewModel
 
         #endregion
 
-        private void SetRedBlockControl(Window wnd, string blockname)
-        {
-            System.Windows.Controls.Control block = wnd.FindName(blockname) as System.Windows.Controls.Control;
-            block.BorderBrush = Brushes.Red;
-        }
-
-        private void SetDefaultBlockControl(Window wnd, string blockname)
-        {
-            System.Windows.Controls.Control block = wnd.FindName(blockname) as System.Windows.Controls.Control;
-            block.BorderBrush = Brushes.Gray;
-        }
-
         public static string AccountName { get; set; }
 
         public static int AccountBalance { get; set; }
@@ -373,8 +329,6 @@ namespace FinApp.ViewModel
                 );
             }
         }
-
-
 
         #region Редактирование и удаление элементов
         //удаление элементов
@@ -543,11 +497,10 @@ namespace FinApp.ViewModel
                     string resultStr = "";
                     if (CategoryName == null || CategoryName.Length == 0 || CategoryName.Replace(" ", "").Length == 0)
                     {
-                        SetRedBlockControl(wnd, "CategoryName");
+                        ShowMessage("Введите название");
                     }
                     else
                     {
-                        SetDefaultBlockControl(wnd, "CategoryName");
                         resultStr = DataWorker.CreateCategory(CategoryName);
 
                         ShowMessage(resultStr);
@@ -572,21 +525,18 @@ namespace FinApp.ViewModel
                     string resultStr = "";
                     if (AccountName == null || AccountName.Length == 0 || AccountName.Replace(" ", "").Length == 0)
                     {
-                        SetRedBlockControl(wnd, "AccountName");
+                        ShowMessage("Введите название");
                     }
                     else if (AccountType == null)
                     {
-                        SetRedBlockControl(wnd, "AccountTypes");
+                        ShowMessage("Выберите тип счета");
                     }
                     else if (AccountBalance < 0)
                     {
-                        SetRedBlockControl(wnd, "AccountBalance");
+                        ShowMessage("Баланс не может быть отрицательным");
                     }
                     else
                     {
-                        SetDefaultBlockControl(wnd, "AccountName");
-                        SetDefaultBlockControl(wnd, "AccountTypes");
-                        SetDefaultBlockControl(wnd, "AccountBalance");
                         resultStr = DataWorker.CreateAccount(AccountType, AccountName, AccountBalance);
                         ShowMessage(resultStr);
                         UpdateAll();
@@ -609,24 +559,18 @@ namespace FinApp.ViewModel
                     string resultStr = "";
                     if (IncomeSum <= 0) 
                     {
-                        SetRedBlockControl(wnd, "IncomeSum");
+                        ShowMessage("Сумма не может быть отрицательной");
                     }
                     else if (IncomeCategory == null)
                     {
-                        SetDefaultBlockControl(wnd, "IncomeSum");
-                        SetRedBlockControl(wnd, "IncomeCategory");
+                        ShowMessage("Выберите категорию");
                     }
                     else if (IncomeAccount == null)
                     {
-                        SetDefaultBlockControl(wnd, "IncomeSum");
-                        SetDefaultBlockControl(wnd, "IncomeCategory");
-                        SetRedBlockControl(wnd, "IncomeAccount");
+                        ShowMessage("Выберите счет");
                     }
                     else
                     {
-                        SetDefaultBlockControl(wnd, "IncomeSum");
-                        SetDefaultBlockControl(wnd, "IncomeCategory");
-                        SetDefaultBlockControl(wnd, "IncomeAccount");
                         resultStr = DataWorker.CreateOperation(IncomeAccount, IncomeSum, IncomeCategory, IncomeDate, 1);
                         ShowMessage(resultStr);
                         UpdateAll();
@@ -649,24 +593,18 @@ namespace FinApp.ViewModel
                     string resultStr = "";
                     if (ExpenseSum <= 0)
                     {
-                        SetRedBlockControl(wnd, "ExpenseSum");
+                        ShowMessage("Сумма не может быть отрицательной");
                     }
                     else if (ExpenseCategory == null)
                     {
-                        SetDefaultBlockControl(wnd, "ExpenseSum");
-                        SetRedBlockControl(wnd, "ExpenseCategory");
+                        ShowMessage("Выберите категорию");
                     }
                     else if (ExpenseAccount == null)
                     {
-                        SetDefaultBlockControl(wnd, "ExpenseSum");
-                        SetDefaultBlockControl(wnd, "ExpenseCategory");
-                        SetRedBlockControl(wnd, "ExpenseAccount");
+                        ShowMessage("Выберите счет");
                     }
                     else
                     {
-                        SetDefaultBlockControl(wnd, "ExpenseSum");
-                        SetDefaultBlockControl(wnd, "ExpenseCategory");
-                        SetDefaultBlockControl(wnd, "ExpenseAccount");
                         resultStr = DataWorker.CreateOperation(ExpenseAccount, ExpenseSum, ExpenseCategory, ExpenseDate, 0);
                         ShowMessage(resultStr);
                         UpdateAll();
@@ -791,12 +729,12 @@ namespace FinApp.ViewModel
             SetCenterPositionAndOpen(messageWindow);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
+        //public event PropertyChangedEventHandler PropertyChanged;
+        //public void OnPropertyChanged([CallerMemberName] string prop = "")
+        //{
+        //    if (PropertyChanged != null)
+        //        PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        //}
 
         public void DisplayHelp()
         {
