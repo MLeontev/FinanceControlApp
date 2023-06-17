@@ -21,16 +21,19 @@ namespace FinApp.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        ApplicationContext db = new ApplicationContext();
+        
         public static System.Windows.Controls.ListView AllAccountsView;
         public static System.Windows.Controls.ListView AllCategoriesView;
         public static System.Windows.Controls.ListView AllOperationsView;
+
         public static WpfPlot IncomeChart;
         public static WpfPlot ExpenseChart;
+
         private static double[] values;
         private static string[] labels;
-        
 
+        ApplicationContext db = new ApplicationContext();
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -54,27 +57,18 @@ namespace FinApp.View
             List<Category> Categories = DataWorker.GetAllCategories();
 
             values = new double[Categories.Count];
-            for (int i = 0; i < Categories.Count; i++)
-            {
-                int SumAmount = 0;
-                List<Operation> IncomesByCategory = DataWorker.GetAllIncomesByCategoryId(Categories[i].Id);
-                foreach (Operation expense in IncomesByCategory)
-                {
-                    SumAmount += expense.Amount;
-                }
-                values[i] = (double)SumAmount;
-            }
-
             labels = new string[Categories.Count];
+
             for (int i = 0; i < Categories.Count; i++)
             {
                 int SumAmount = 0;
                 List<Operation> IncomesByCategory = DataWorker.GetAllIncomesByCategoryId(Categories[i].Id);
-                foreach (Operation expense in IncomesByCategory)
+                foreach (Operation income in IncomesByCategory)
                 {
-                    SumAmount += expense.Amount;
+                    SumAmount += income.Amount;
                 }
 
+                values[i] = (double)SumAmount;
                 labels[i] = Categories[i].Name + " " + Convert.ToString(SumAmount) + "₽";
             }
 
@@ -104,18 +98,8 @@ namespace FinApp.View
             List<Category> Categories = DataWorker.GetAllCategories();
 
             values = new double[Categories.Count];
-            for (int i = 0; i < Categories.Count; i++)
-            {
-                int SumAmount = 0;
-                List<Operation> ExpensesByCategory = DataWorker.GetAllExpensesByCategoryId(Categories[i].Id);
-                foreach (Operation expense in ExpensesByCategory)
-                {
-                    SumAmount += expense.Amount;
-                }
-                values[i] = (double)SumAmount;
-            }
-
             labels = new string[Categories.Count];
+
             for (int i = 0; i < Categories.Count; i++)
             {
                 int SumAmount = 0;
@@ -125,6 +109,7 @@ namespace FinApp.View
                     SumAmount += expense.Amount;
                 }
 
+                values[i] = (double)SumAmount;
                 labels[i] = Categories[i].Name + " " + Convert.ToString(SumAmount) + "₽";
             }
 

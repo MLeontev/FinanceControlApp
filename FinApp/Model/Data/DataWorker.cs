@@ -49,7 +49,9 @@ namespace FinApp.Model.Data
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Operation> operations = (from operation in GetAllOperations() where operation.AccountId == id select operation).ToList();
+                List<Operation> operations = (from operation in GetAllOperations()
+                                              where operation.AccountId == id
+                                              select operation).ToList();
                 return operations;
             }
         }
@@ -69,7 +71,9 @@ namespace FinApp.Model.Data
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Operation> incomes = (from operation in GetAllOperationsByCategoryId(id) where operation.IsIncome == 1 select operation).ToList();
+                List<Operation> incomes = (from operation in GetAllOperationsByCategoryId(id)
+                                           where operation.IsIncome == 1
+                                           select operation).ToList();
                 return incomes;
             }
         }
@@ -79,7 +83,9 @@ namespace FinApp.Model.Data
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Operation> expenses = (from operation in GetAllOperationsByCategoryId(id) where operation.IsIncome == 0 select operation).ToList();
+                List<Operation> expenses = (from operation in GetAllOperationsByCategoryId(id)
+                                            where operation.IsIncome == 0
+                                            select operation).ToList();
                 return expenses;
             }
         }
@@ -211,10 +217,10 @@ namespace FinApp.Model.Data
             string result = "Такого дохода не существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                Operation operation = db.Operations.FirstOrDefault(income => income.Id == oldOperation.Id);
+                Operation operation = db.Operations.FirstOrDefault(o => o.Id == oldOperation.Id);
                 operation.AccountId = newAccount.Id;
                 operation.Amount = newAmount;
-                operation.Category = newCategory;
+                operation.CategoryId = newCategory.Id;
                 operation.Date = newDate;
                 operation.IsIncome = newIsIncome;
                 db.SaveChanges();
@@ -229,7 +235,8 @@ namespace FinApp.Model.Data
             string result = "Такой категории не существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                Category operation = db.Categories.FirstOrDefault(category => category.Id == oldCategory.Id);
+                Category? operation = db.Categories
+                                       .FirstOrDefault(category => category.Id == oldCategory.Id);
                 operation.Name = newName;
                 db.SaveChanges();
                 result = $"Категория изменена";

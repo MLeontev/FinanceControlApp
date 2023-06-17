@@ -21,7 +21,6 @@ namespace FinApp.ViewModel
 {
     public class DataManageViewModel
     {
-
         //все счета пользователя
         private List<Account> allAccounts = DataWorker.GetAllAccounts();
         public List<Account> AllAccounts

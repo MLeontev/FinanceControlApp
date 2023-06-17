@@ -21,7 +21,7 @@
                       materialDesign:HintAssist.Hint="Изменить тип счета" 
                       Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                       Margin="20 0"
-                      SelectedItem="{Binding AccountType}">
+                      Text="{Binding AccountType}">
                 <TextBlock>Наличные</TextBlock>
                 <TextBlock>Дебетовая карта</TextBlock>
                 <TextBlock>Кредитная карта</TextBlock>
