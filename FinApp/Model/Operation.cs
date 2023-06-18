@@ -1,4 +1,5 @@
 ﻿using FinApp.Model.Data;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -44,6 +45,19 @@ namespace FinApp.Model
             {
                 return IsIncome == 1 ? $"+{Amount}" : $"-{Amount}";
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (obj is Operation o)
+                return Amount == o.Amount
+                    && Date == o.Date
+                    && IsIncome == o.IsIncome
+                    && AccountId == o.AccountId
+                    && CategoryId == o.CategoryId;
+            return false;
         }
     }
 }

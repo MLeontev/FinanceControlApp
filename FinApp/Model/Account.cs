@@ -37,5 +37,40 @@ namespace FinApp.Model
                 return balance;
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Account a = (Account)obj;
+
+            if (Name != a.Name || Type != a.Type || Balance != a.Balance)
+            {
+                return false;
+            }
+
+            if (Operations == null && a.Operations == null)
+            {
+                return true;
+            }
+
+            if (Operations == null || a.Operations == null || Operations.Count != a.Operations.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < Operations.Count; i++)
+            {
+                if (!Operations[i].Equals(a.Operations[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

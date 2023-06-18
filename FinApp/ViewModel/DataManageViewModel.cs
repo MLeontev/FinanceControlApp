@@ -803,7 +803,7 @@ namespace FinApp.ViewModel
             get
             {
                 return _showHelpCommand ??
-                       (_showHelpCommand = new RelayCommand(p => DisplayHelp(), p => true));
+                       (_showHelpCommand = new RelayCommand(p => DisplayHelp()));
             }
         }
     }

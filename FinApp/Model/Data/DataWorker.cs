@@ -235,9 +235,9 @@ namespace FinApp.Model.Data
             string result = "Такой категории не существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                Category? operation = db.Categories
+                Category? category = db.Categories
                                        .FirstOrDefault(category => category.Id == oldCategory.Id);
-                operation.Name = newName;
+                category.Name = newName;
                 db.SaveChanges();
                 result = $"Категория изменена";
             }
@@ -245,7 +245,9 @@ namespace FinApp.Model.Data
         }
 
         //получить операции по фильтрам
-        public static List<Operation> GetBankOperationsInRange(int minAmount, int maxAmount, DateTime startDate, DateTime endDate, int categoryId, int accountId)
+        public static List<Operation> GetBankOperationsInRange(int minAmount, int maxAmount,
+                                                               DateTime startDate, DateTime endDate,
+                                                               int categoryId, int accountId)
         {
             using (ApplicationContext db = new ApplicationContext())
             {

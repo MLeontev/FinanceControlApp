@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FinApp.Model.Data;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace FinApp.Model
 {
@@ -43,6 +44,41 @@ namespace FinApp.Model
                 }
                 return sum;
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Category c = (Category)obj;
+
+            if (Name != c.Name)
+            {
+                return false;
+            }
+
+            if (Operations == null && c.Operations == null)
+            {
+                return true;
+            }
+
+            if (Operations == null || c.Operations == null || Operations.Count != c.Operations.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < Operations.Count; i++)
+            {
+                if (!Operations[i].Equals(c.Operations[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
