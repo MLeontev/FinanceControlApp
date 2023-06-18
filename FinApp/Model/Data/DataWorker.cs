@@ -224,7 +224,7 @@ namespace FinApp.Model.Data
                 operation.Date = newDate;
                 operation.IsIncome = newIsIncome;
                 db.SaveChanges();
-                result = $"Доход за {operation.Date:D} изменен";
+                result = $"Операция за {operation.Date:D} изменена";
             }
             return result;
         }
@@ -314,7 +314,7 @@ namespace FinApp.Model.Data
                         o.Amount >= minAmount &&
                         o.Amount <= maxAmount &&
                         o.Date >= startDate &&
-                        o.Date < endDate)
+                        o.Date <= endDate)
                     .Include(o => o.Category)
                     .Include(o => o.Account)
                     .ToList();
