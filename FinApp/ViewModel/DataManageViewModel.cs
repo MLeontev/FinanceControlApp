@@ -256,8 +256,8 @@ namespace FinApp.ViewModel
         public static string MaxSum { get; set; } = Convert.ToString(DataWorker.GetMaxAmount());
         public static Category FilterCategory { get; set; }
         public static Account FilterAccount { get; set; }
-        public static DateTime FilterStartDate { get; set; } = DateTime.Now;
-        public static DateTime FilterEndDate { get; set; } = DateTime.Now;
+        public static DateTime FilterStartDate { get; set; } = DateTime.Today;
+        public static DateTime FilterEndDate { get; set; } = DateTime.Today;
         #endregion
 
 
