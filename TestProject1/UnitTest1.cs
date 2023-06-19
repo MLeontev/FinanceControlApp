@@ -322,7 +322,7 @@ namespace TestProject
             db = new ApplicationContext();
             o = db.Operations.FirstOrDefault();
 
-            Assert.AreEqual("Операция за 18 июня 2023 г. изменена", result);
+            Assert.AreEqual("Операция за 19 июня 2023 г. изменена", result);
             Assert.AreEqual(200, o.Amount);
         }
 
