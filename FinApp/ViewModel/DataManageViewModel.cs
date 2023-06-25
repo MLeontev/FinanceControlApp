@@ -359,6 +359,20 @@ namespace FinApp.ViewModel
             }
         }
 
+        private RelayCommand removeAllOperations;
+        public RelayCommand RemoveAllOperations
+        {
+            get
+            {
+                return removeAllOperations ?? new RelayCommand(obj =>
+                {
+                    DataWorker.RemoveAllOperations();
+                    UpdateAll();
+                }
+                );
+            }
+        }
+
         #region Редактирование и удаление элементов
         //удаление элементов
         private RelayCommand deleteItem;

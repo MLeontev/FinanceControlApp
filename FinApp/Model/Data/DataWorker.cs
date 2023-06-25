@@ -334,5 +334,16 @@ namespace FinApp.Model.Data
             }
             return max;
         }
+
+        //удалить все операции
+        public static void RemoveAllOperations()
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var oprations = db.Operations.ToList();
+                db.Operations.RemoveRange(oprations);
+                db.SaveChanges();
+            }
+        }
     }
 }
