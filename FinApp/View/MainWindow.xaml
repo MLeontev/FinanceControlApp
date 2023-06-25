@@ -58,18 +58,18 @@
 
                         <Button x:Name="FilterButton"
                                 Content="Фильтр" Background="LightGray"
-                                FontSize="15" Grid.Row="1" Margin="50 0 0 0"
-                                Width="100" Command="{Binding OpenFilterWindow}"/>
+                                FontSize="12" Grid.Row="1" Margin="50 0 0 0"
+                                Width="110" Command="{Binding OpenFilterWindow}"/>
 
                         <Button x:Name="ClearFilterButton"
                                 Content="Фильтр сброс" Background="LightGray"
-                                FontSize="10" Grid.Row="1" Margin="25 0 0 0"
-                                Width="100" Command="{Binding RemoveFilters}"/>
+                                FontSize="12" Grid.Row="1" Margin="25 0 0 0"
+                                Width="110" Command="{Binding RemoveFilters}"/>
 
                         <Button x:Name="RemoveAllOperations"
                                 Content="Удалить все" Background="LightGray"
-                                FontSize="12" Grid.Row="1" Margin="25 0 0 0"
-                                Width="100" Command="{Binding RemoveAllOperations}"/>
+                                FontSize="12" Grid.Row="1" Margin="50 0 0 0"
+                                Width="110" Command="{Binding RemoveAllOperations}"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
